@@ -6,6 +6,14 @@
 		  select no, name, address, phone_number, url, is_active from hospital where is_active = 1
 		]]>
 	</select>
+
+	<select id="findByNo" parameterType="long"
+		resultType="hospitalvo">
+		<![CDATA[
+		  select no, name, address, phone_number, url, is_active from hospital where is_active = 1 and no = #{no}
+		]]>
+	</select>
+
 	<insert id="insertHospital" parameterType="hospitalvo">
 		<![CDATA[
 			insert into hospital values(null, #{name}, #{address}, #{phoneNumber}, #{url}, 1)
@@ -21,6 +29,7 @@
 			insert into employee values(null, #{name}, "000000-0000000", #{email}, #{password}, 0, #{address}, #{phoneNumber}, "관리자", "0", now(), #{hospitalNo})
 		]]>
 	</insert>
+
 	<update id="updateIsActive" parameterType="long">
 		<![CDATA[
 			update hospital set is_active = 0 where no = #{no};
@@ -31,4 +40,15 @@
 			delete from employee where hospital_no = #{no};
 		]]>
 	</delete>
+
+	<update id="updateHospital" parameterType="hospitalvo">
+		<![CDATA[
+			update hospital set name = #{name}, address = #{address}, phone_number = #{phoneNumber}, url = #{url}  where no = #{no};
+		]]>
+	</update>
+	<update id="updateHospitalAdmin" parameterType="employeevo">
+		<![CDATA[
+			update employee set address = #{address}, phone_number = #{phoneNumber} where hospital_no = #{hospitalNo};
+		]]>
+	</update>
 </mapper>

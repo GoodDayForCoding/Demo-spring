@@ -19,6 +19,10 @@ public class AdminRepository {
 		return sqlSession.selectList("admin.findAll");
 	}
 
+	public HospitalVo findByNo(Long no) {
+		return sqlSession.selectOne("admin.findByNo", no);
+	}
+
 	public Boolean insertHospital(HospitalVo hospitalVo) {
 		return sqlSession.insert("admin.insertHospital", hospitalVo) == 1;
 	}
@@ -33,5 +37,13 @@ public class AdminRepository {
 
 	public Boolean deleteHospitalAdmin(Long no) {
 		return sqlSession.delete("admin.deleteHospitalAdmin", no) == 1;
+	}
+
+	public Boolean updateHospital(HospitalVo hospitalVo) {
+		return sqlSession.update("admin.updateHospital", hospitalVo) == 1;		
+	}
+
+	public Boolean updateHospitalAdmin(EmployeeVo employeeVo) {
+		return sqlSession.update("admin.updateHospitalAdmin", employeeVo) == 1;		
 	}
 }
