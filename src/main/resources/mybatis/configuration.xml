@@ -8,11 +8,18 @@
 	<typeAliases>
 		<typeAlias type="com.example.demo.vo.HospitalVo"
 			alias="hospitalvo" />
-			<typeAlias type="com.example.demo.vo.EmployeeVo"
+		<typeAlias type="com.example.demo.vo.EmployeeVo"
 			alias="employeevo" />
+		<typeAlias type="com.example.demo.vo.DoctorVo"
+			alias="doctorvo"/>
+		<typeAlias type="com.example.demo.vo.DiseaseDataVo"
+			alias="diseasedatavo"/>	
+		<typeAlias type="com.example.demo.vo.MedicineDataVo"
+			alias="medicinedatavo"/>	
 	</typeAliases>
 
 	<mappers>
 		<mapper resource="mybatis/mappers/admin.xml" />
+		<mapper resource="mybatis/mappers/doctor.xml" />
 	</mappers>
 </configuration>
