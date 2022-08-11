@@ -1,4 +1,4 @@
-package com.example.demo.service;
+package com.example.demo.admin.service;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.demo.repository.AdminRepository;
+import com.example.demo.admin.repository.AdminRepository;
 import com.example.demo.vo.EmployeeVo;
 import com.example.demo.vo.HospitalVo;
 
