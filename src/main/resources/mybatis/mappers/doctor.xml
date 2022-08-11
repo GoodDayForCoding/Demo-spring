@@ -1,5 +1,53 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="doctor">
-
+	<select id="getTreatList" parameterType="long" resultType="doctorvo">
+		<![CDATA[
+			select 
+				a.date as appointmentDate, 
+				a.remarks as appointmentRemark, 
+				b.no as patientNo, 
+				b.name as patientName, 
+				a.employee_no as employeeNo
+			from appointment a 
+			left join patient b on a.patient_no = b.no
+			where a.patient_no= #{no}
+			
+		]]>
+	</select>
+	
+	<select id="getDiease" parameterType="string" resultType="diseasedatavo">
+		<![CDATA[
+			select 
+				disease_number as diseaseNumber,
+				disease_name as diseaseName
+			from disease_data
+			where disease_name like concat('%', #{name}, '%')
+		]]>
+	</select>
+	
+	<select id="getMedicine" parameterType="string" resultType="medicinedatavo">
+		<![CDATA[
+			select 
+				medicine_number as medicineNumber,
+				medicine_name as medicineName,
+				medicine_unit as medicineUnit
+			FROM medicine_data		
+			where medicine_sort=1
+			and medicine_name like concat('%', #{name}, '%')
+		]]>
+	</select>
+	
+	<select id="getTreatment" parameterType="string" resultType="medicinedatavo">
+		<![CDATA[
+			select 
+				medicine_number as medicineNumber,
+				medicine_name as medicineName,
+				medicine_unit as medicineUnit
+			FROM medicine_data		
+			where medicine_sort=2
+			and medicine_name like concat('%', #{name}, '%')
+		]]>
+	</select>
+	
 </mapper>

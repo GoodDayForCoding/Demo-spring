@@ -11,4 +11,6 @@ public class MedicineDataVo {
 
 	private String medicineNumber;
 	private String medicineName;
+	private String medicineUnit;
+	private int medicineSort;
 }
