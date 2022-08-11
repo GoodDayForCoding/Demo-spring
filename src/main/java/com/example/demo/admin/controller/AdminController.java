@@ -27,6 +27,11 @@ public class AdminController {
 	public ResponseEntity<JsonResult> index() {
 		return ResponseEntity.status(HttpStatus.OK).body(JsonResult.success(adminService.getHospitalList()));
 	}
+	
+	@GetMapping("/{no}")
+	public ResponseEntity<JsonResult> index(@PathVariable("no") Long no) {
+		return ResponseEntity.status(HttpStatus.OK).body(JsonResult.success(adminService.getHospitalOne(no)));
+	}
 
 	@PostMapping("")
 	public ResponseEntity<JsonResult> join(@RequestBody HospitalVo hospitalVo) {
@@ -38,6 +43,12 @@ public class AdminController {
 	@DeleteMapping("/{no}")
 	public ResponseEntity<JsonResult> remove(@PathVariable("no") Long no) {
 		Boolean result = adminService.hospitalRemove(no);
+		return ResponseEntity.status(HttpStatus.OK).body(JsonResult.success(result ? no : null));
+	}
+	
+	@PutMapping("/{no}")
+	public ResponseEntity<JsonResult> update(@PathVariable("no") Long no, @RequestBody HospitalVo hospitalVo) {
+		Boolean result = adminService.hospitalupdate(hospitalVo);
 		return ResponseEntity.status(HttpStatus.OK).body(JsonResult.success(result ? no : null));
 	}
 }

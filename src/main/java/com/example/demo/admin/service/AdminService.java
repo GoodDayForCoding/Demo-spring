@@ -20,6 +20,10 @@ public class AdminService {
 		return adminRepository.findAll();
 	}
 
+	public HospitalVo getHospitalOne(Long no) {
+		return adminRepository.findByNo(no);
+	}
+
 	@Transactional
 	public Boolean hopitalJoin(HospitalVo hospitalVo) {
 		adminRepository.insertHospital(hospitalVo);
@@ -34,10 +38,22 @@ public class AdminService {
 
 		return adminRepository.insertHospitalAdmin(employeeVo);
 	}
-	
+
 	@Transactional
 	public Boolean hospitalRemove(Long no) {
 		adminRepository.updateIsActive(no);
 		return adminRepository.deleteHospitalAdmin(no);
+	}
+
+	@Transactional
+	public Boolean hospitalupdate(HospitalVo hospitalVo) {
+		adminRepository.updateHospital(hospitalVo);
+
+		EmployeeVo employeeVo = new EmployeeVo();
+		employeeVo.setAddress(hospitalVo.getAddress());
+		employeeVo.setPhoneNumber(hospitalVo.getPhoneNumber());
+		employeeVo.setHospitalNo(hospitalVo.getNo());
+
+		return adminRepository.updateHospitalAdmin(employeeVo);
 	}
 }
