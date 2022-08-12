@@ -6,9 +6,14 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.example.demo.vo.AppointmentVo;
+import com.example.demo.vo.DiagnosisVo;
 import com.example.demo.vo.DiseaseDataVo;
+import com.example.demo.vo.DiseaseVo;
 import com.example.demo.vo.DoctorVo;
 import com.example.demo.vo.MedicineDataVo;
+import com.example.demo.vo.PrescriptionVo;
+import com.example.demo.vo.TreatmentVo;
 
 @Repository
 public class DoctorRepository {
@@ -31,5 +36,27 @@ public class DoctorRepository {
 	public List<MedicineDataVo> getModalTreatment(String name) {
 		return sqlSession.selectList("doctor.getTreatment", name);
 	}
+
+	public Boolean doctorSuccess(DiagnosisVo diagnosisVo) {
+		return sqlSession.insert("doctor.insertDiagnosis", diagnosisVo) == 1;
+	}
+
+	public Boolean insertPrescription(PrescriptionVo prescriptionVo) {
+		return sqlSession.insert("doctor.insertPrescription", prescriptionVo) == 1;
+	}
+
+	public Boolean insertDisease(DiseaseVo diseaseVo) {
+		return sqlSession.insert("doctor.insertDisease", diseaseVo) == 1;
+	}
+
+	public Boolean insertTreatment(TreatmentVo treatmentVo) {
+		return sqlSession.insert("doctor.insertTreatment", treatmentVo) == 1;		
+	}
+
+	public Boolean updateAppointment(AppointmentVo appointmentVo) {
+		return sqlSession.update("doctor.updateAppointment", appointmentVo) == 1;
+	}
+	
+	
 	
 }

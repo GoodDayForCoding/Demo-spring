@@ -10,7 +10,7 @@ import lombok.ToString;
 public class AppointmentVo {
 
 	private Long no;
-	private String status;
+	private int status;
 	private String date;
 	private String remarks;
 	private String doctorName;

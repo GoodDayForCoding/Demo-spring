@@ -10,9 +10,8 @@ import lombok.ToString;
 public class TreatmentVo {
 
 	private Long no;
-	private String medicineNumber;
 	private String medicineName;
-	private String usage;
-	private int dose;
+	private String treat;
+	private String dose;
 	private Long diagnosisNo;
 }

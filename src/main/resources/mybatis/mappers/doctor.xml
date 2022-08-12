@@ -16,6 +16,52 @@
 		]]>
 	</select>
 	
+	
+	
+	
+	<!-- 의사 진료 완료했을 때 start -->
+	<insert id="insertDiagnosis" parameterType="diagnosisVo">
+		<![CDATA[
+			insert into diagnosis(appointment_no, opinion, patient_no) values (#{appointmentNo},#{opinion}, #{patientNo});
+		]]>
+		<selectKey keyProperty="no" resultType="long" order="AFTER">
+			<![CDATA[
+				select last_insert_id();
+			]]>
+		</selectKey>
+	</insert>
+	
+	<insert id="insertPrescription" parameterType="prescriptionVo">
+		<![CDATA[
+			insert into prescription(medicine_name, dose, dosing_prequency, dosing_days, remark, diagnosis_no) 
+			values (#{medicineName},#{dose},#{dosingPrequency},#{dosingDays},#{remark},#{diagnosisNo});	
+		]]>
+	</insert>
+	
+	<insert id="insertDisease" parameterType="diseaseVo">
+		<![CDATA[
+			insert into disease(disease_name, diagnosis_no) values (#{diseaseName}, #{diagnosisNo});		
+		]]>
+	</insert>
+		
+	<insert id="insertTreatment" parameterType="treatmentVo">
+		<![CDATA[
+			insert into treatment(	medicine_name, treat, dose, diagnosis_no) 
+			values (#{medicineName}, #{treat}, #{dose}, #{diagnosisNo});	
+		]]>
+	</insert>
+	
+	<update id="updateAppointment" parameterType="appointmentVo">
+		<![CDATA[
+			update appointment set status = #{status} where no = #{no}
+		]]>
+	</update>	
+	<!-- 의사 진료 완료했을 때 end -->
+	
+	
+	
+	
+	<!-- 모달(팝업)창 안에 들어갈 내용 start -->
 	<select id="getDiease" parameterType="string" resultType="diseasedatavo">
 		<![CDATA[
 			select 
@@ -49,5 +95,5 @@
 			and medicine_name like concat('%', #{name}, '%')
 		]]>
 	</select>
-	
+	<!-- 모달(팝업)창 안에 들어갈 내용 end -->
 </mapper>
