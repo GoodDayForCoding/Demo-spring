@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.nurse.repository.NurseRepository;
+import com.example.demo.vo.AppointmentVo;
 import com.example.demo.vo.PatientVo;
 
 
@@ -16,27 +17,41 @@ public class NurseService {
 	@Autowired
 	private NurseRepository nurseRepository;
 
-	public List<PatientVo> getHospitalList() {
-		return nurseRepository.findAllPatients();
+	
+	public Boolean addAppointment(AppointmentVo appointmentVo) {
+		
+		return nurseRepository.insertAppointment(appointmentVo);
 	}
 
-	public PatientVo getHospitalOne(Long no) {
-		return nurseRepository.findPatientByNo(no);
+	public Boolean modifyApointment(AppointmentVo appointmentVo) {
+
+		return nurseRepository.updateAppointment(appointmentVo);
 	}
 
-	@Transactional
-	public Boolean patientJoin(PatientVo patientVo) {
-		nurseRepository.insertPatient(patientVo);
+	public List<PatientVo> findPatientList() {
 
+		return nurseRepository.selectPatientList();
+	}
+
+	public PatientVo findPatient(Long no) {
+
+		return nurseRepository.selectPatient(no);
+	}
+
+	public Boolean addPatient(PatientVo patientVo) {
 		
 		return nurseRepository.insertPatient(patientVo);
 	}
 
+	public List<AppointmentVo> findAppointmentList() {
 
-	@Transactional
-	public Boolean patientUpdate(PatientVo patientVo) {
-		nurseRepository.updatePatient(patientVo);
-
-		return nurseRepository.updatePatient(patientVo);
+		return nurseRepository.selectAppointmentList();
 	}
+
+	public AppointmentVo findAppointment(Long no) {
+
+		return nurseRepository.selectAppointment(no);
+	}
+
+	
 }

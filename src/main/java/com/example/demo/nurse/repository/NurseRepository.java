@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.example.demo.vo.AppointmentVo;
 import com.example.demo.vo.PatientVo;
 
 
@@ -15,21 +16,44 @@ public class NurseRepository {
 	@Autowired
 	private SqlSession sqlSession;
 
-	public List<PatientVo> findAllPatients() {
-		return sqlSession.selectList("nurse.findAllPatients");
-	}
-
-	public PatientVo findPatientByNo(Long no) {
-		return sqlSession.selectOne("nurse.findPatientByNo", no);
-	}
-
+	
 	public Boolean insertPatient(PatientVo patientVo) {
 		return sqlSession.insert("nurse.insertPatient", patientVo) == 1;
 	}
 
 
 	public Boolean updatePatient(PatientVo patientVo) {
-		return sqlSession.update("nurse", patientVo) == 1;		
+		return sqlSession.update("nurse.updatePatient", patientVo) == 1;		
+	}
+
+	public Boolean insertAppointment(AppointmentVo appointmentVo) {
+		
+		return sqlSession.insert("nurse.insertAppointment", appointmentVo) == 1;
+	}
+
+	public Boolean updateAppointment(AppointmentVo appointmentVo) {
+		
+		return sqlSession.update("nurse.updateAppointment", appointmentVo) == 1;
+	}
+
+	public List<PatientVo> selectPatientList() {
+		
+		return sqlSession.selectList("nurse.findAllPatients");
+	}
+
+	public PatientVo selectPatient(Long no) {
+
+		return sqlSession.selectOne("nurse.findPatientByNo", no);
+	}
+
+	public List<AppointmentVo> selectAppointmentList() {
+		
+		return sqlSession.selectOne("nurse.findAllAppointments");
+	}
+
+	public AppointmentVo selectAppointment(Long no) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
