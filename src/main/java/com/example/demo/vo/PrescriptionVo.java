@@ -7,14 +7,13 @@ import lombok.ToString;
 @Setter
 @Getter
 @ToString
-public class prescriptionVo {
+public class PrescriptionVo {
 
 	private Long no;
-	private String medicineNumber;
 	private String medicineName;
-	private int dose;
-	private int dosingPrequency;
-	private int dosingDays;
-	private String usage;
+	private String dose;
+	private Long dosingPrequency;
+	private Long dosingDays;
+	private String remark;
 	private Long diagnosisNo;
 }
