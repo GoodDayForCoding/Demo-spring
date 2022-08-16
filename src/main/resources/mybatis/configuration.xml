@@ -26,10 +26,16 @@
 			alias="diagnosisvo"/>
 		<typeAlias type="com.example.demo.vo.AppointmentVo"
 			alias="appointmentvo"/>
+		<typeAlias type="com.example.demo.vo.PatientVo"
+			alias="patientvo"/>
+		<typeAlias type="com.example.demo.vo.NurseVo"
+			alias="nursevo"/>
 	</typeAliases>
 
 	<mappers>
 		<mapper resource="mybatis/mappers/admin.xml" />
 		<mapper resource="mybatis/mappers/doctor.xml" />
+		<mapper resource="mybatis/mappers/nurse.xml" />
+		
 	</mappers>
 </configuration>

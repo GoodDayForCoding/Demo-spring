@@ -1,5 +1,48 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="nurse">
-
+	<select id="findAllPatients" resultType="patientVo">
+		<![CDATA[
+			select * from patient
+		]]>
+	</select>
+	<select id="findPatientByNo" resultType="patientVo">
+		<![CDATA[
+			select * from patient where no = #{no}
+		]]>
+	</select>
+	<select id="findAllAppointments" resultType="nurseVo">
+		<![CDATA[
+			SELECT 
+				a.no as appointmentNo,
+				a.date as appointmentDate,
+			    b.name as patientName,
+			    b.rrn as patientAge,
+			    b.gender as patientGender,
+			    a.remarks as appointmentRemark,
+			    a.status as appointmentStatus,
+			    c.name as doctorName
+			FROM appointment a
+			LEFT JOIN patient b on a.patient_no = b.no
+			LEFT JOIN employee c on a.employee_no = c.no
+		]]>
+	</select>
+	<select id="findAppointmentByNo" resultType="nurseVo">
+	<![CDATA[
+			SELECT 
+				a.no as appointmentNo,
+				a.date as appointmentDate,
+			    b.name as patientName,
+			    b.rrn as patientAge,
+			    b.gender as patientGender,
+			    a.remarks as appointmentRemarks,
+			    a.status as appointmentStatus,
+			    c.name as doctorName
+			FROM appointment a
+			LEFT JOIN patient b on a.patient_no = b.no
+			LEFT JOIN employee c on a.employee_no = c.no
+			WHERE a.patient_no = {no};
+			
+		]]>
+	</select>
 </mapper>
