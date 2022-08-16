@@ -16,12 +16,16 @@
 			alias="diseasedatavo"/>	
 		<typeAlias type="com.example.demo.vo.MedicineDataVo"
 			alias="medicinedatavo"/>
-		<typeAlias type="com.example.demo.vo.PatientVo"
-			alias="patientvo"/>	
+		<typeAlias type="com.example.demo.vo.PrescriptionVo"
+			alias="prescriptionvo"/>
+		<typeAlias type="com.example.demo.vo.DiseaseVo"
+			alias="diseasevo"/>
+		<typeAlias type="com.example.demo.vo.TreatmentVo"
+			alias="treatmentvo"/>
+		<typeAlias type="com.example.demo.vo.DiagnosisVo"
+			alias="diagnosisvo"/>
 		<typeAlias type="com.example.demo.vo.AppointmentVo"
-			alias="appointmentvo"/>		
-		<typeAlias type="com.example.demo.vo.NurseVo"
-			alias="nurseVo"/>		
+			alias="appointmentvo"/>
 	</typeAliases>
 
 	<mappers>
