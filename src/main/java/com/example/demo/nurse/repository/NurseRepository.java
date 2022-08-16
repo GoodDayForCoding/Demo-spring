@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.example.demo.vo.AppointmentVo;
+import com.example.demo.vo.NurseVo;
 import com.example.demo.vo.PatientVo;
 
 
@@ -46,14 +47,14 @@ public class NurseRepository {
 		return sqlSession.selectOne("nurse.findPatientByNo", no);
 	}
 
-	public List<AppointmentVo> selectAppointmentList() {
+	public List<NurseVo> selectAppointmentList() {
 		
-		return sqlSession.selectOne("nurse.findAllAppointments");
+		return sqlSession.selectList("nurse.findAllAppointments");
 	}
 
-	public AppointmentVo selectAppointment(Long no) {
-		// TODO Auto-generated method stub
-		return null;
+	public NurseVo selectAppointment(Long no) {
+		
+		return sqlSession.selectOne("nurse.findAppointmentByNo", no);
 	}
 
 }

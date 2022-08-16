@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.nurse.repository.NurseRepository;
 import com.example.demo.vo.AppointmentVo;
+import com.example.demo.vo.NurseVo;
 import com.example.demo.vo.PatientVo;
 
 
@@ -43,12 +44,12 @@ public class NurseService {
 		return nurseRepository.insertPatient(patientVo);
 	}
 
-	public List<AppointmentVo> findAppointmentList() {
+	public List<NurseVo> findAppointmentList() {
 
 		return nurseRepository.selectAppointmentList();
 	}
 
-	public AppointmentVo findAppointment(Long no) {
+	public NurseVo findAppointment(Long no) {
 
 		return nurseRepository.selectAppointment(no);
 	}

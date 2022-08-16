@@ -20,6 +20,8 @@
 			alias="patientvo"/>	
 		<typeAlias type="com.example.demo.vo.AppointmentVo"
 			alias="appointmentvo"/>		
+		<typeAlias type="com.example.demo.vo.NurseVo"
+			alias="nurseVo"/>		
 	</typeAliases>
 
 	<mappers>
