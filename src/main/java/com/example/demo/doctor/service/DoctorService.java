@@ -30,16 +30,16 @@ public class DoctorService {
 	
 
 	
-	public List<DiseaseDataVo> getModalDiease(String name) {
-		return doctorRepository.getModalDiease(name);
+	public List<DiseaseDataVo> getModalDiease(String name, int page) {
+		return doctorRepository.getModalDiease(name, page);
 	}
 
-	public List<MedicineDataVo> getModalPrescription(String name) {
-		return doctorRepository.getModalPrescription(name);
+	public List<MedicineDataVo> getModalPrescription(String name, int page) {
+		return doctorRepository.getModalPrescription(name, page);
 	}
 
-	public List<MedicineDataVo> getModalTreatment(String name) {
-		return doctorRepository.getModalTreatment(name);
+	public List<MedicineDataVo> getModalTreatment(String name, int page) {
+		return doctorRepository.getModalTreatment(name, page);
 	}
 
 

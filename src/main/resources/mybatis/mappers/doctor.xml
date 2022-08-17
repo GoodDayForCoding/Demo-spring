@@ -62,17 +62,18 @@
 	
 	
 	<!-- 모달(팝업)창 안에 들어갈 내용 start -->
-	<select id="getDiease" parameterType="string" resultType="diseasedatavo">
+	<select id="getDiease" parameterType="map" resultType="diseasedatavo">
 		<![CDATA[
 			select 
 				disease_number as diseaseNumber,
 				disease_name as diseaseName
 			from disease_data
 			where disease_name like concat('%', #{name}, '%')
+			limit #{page}, 10
 		]]>
 	</select>
 	
-	<select id="getMedicine" parameterType="string" resultType="medicinedatavo">
+	<select id="getMedicine" parameterType="map" resultType="medicinedatavo">
 		<![CDATA[
 			select 
 				medicine_number as medicineNumber,
@@ -81,10 +82,11 @@
 			FROM medicine_data		
 			where medicine_sort=1
 			and medicine_name like concat('%', #{name}, '%')
+			limit #{page}, 10
 		]]>
 	</select>
 	
-	<select id="getTreatment" parameterType="string" resultType="medicinedatavo">
+	<select id="getTreatment" parameterType="map" resultType="medicinedatavo">
 		<![CDATA[
 			select 
 				medicine_number as medicineNumber,
@@ -93,6 +95,7 @@
 			FROM medicine_data		
 			where medicine_sort=2
 			and medicine_name like concat('%', #{name}, '%')
+			limit #{page}, 10
 		]]>
 	</select>
 	<!-- 모달(팝업)창 안에 들어갈 내용 end -->
