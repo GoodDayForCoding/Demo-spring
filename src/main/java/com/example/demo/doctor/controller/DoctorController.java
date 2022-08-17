@@ -40,18 +40,21 @@ public class DoctorController {
 	
 	
 	
-	@GetMapping("/diseasemodal/{name}")
-	public ResponseEntity<JsonResult> modalDiease(@PathVariable("name") String name){
-		return ResponseEntity.status(HttpStatus.OK).body(JsonResult.success(doctorService.getModalDiease(name)));
+	@GetMapping("/diseasemodal")
+	public ResponseEntity<JsonResult> modalDiease(@RequestParam(value="name", required=true, defaultValue="") String name,
+												  @RequestParam(value="page", required = true, defaultValue = "0") int page){
+		return ResponseEntity.status(HttpStatus.OK).body(JsonResult.success(doctorService.getModalDiease(name, page)));
 	}
 	
-	@GetMapping("/prescriptionmodal/{name}")
-	public ResponseEntity<JsonResult> modalPrescription(@PathVariable("name") String name){
-		return ResponseEntity.status(HttpStatus.OK).body(JsonResult.success(doctorService.getModalPrescription(name)));
+	@GetMapping("/prescriptionmodal")
+	public ResponseEntity<JsonResult> modalPrescription(@RequestParam(value="name", required=true, defaultValue="") String name,
+			  											@RequestParam(value="page", required = true, defaultValue = "0") int page){
+		return ResponseEntity.status(HttpStatus.OK).body(JsonResult.success(doctorService.getModalPrescription(name, page)));
 	}
 	
 	@GetMapping("/treatmentmodal")
-	public ResponseEntity<JsonResult> modalTreatment(@RequestParam(value="name", required=true, defaultValue="") String name){
-		return ResponseEntity.status(HttpStatus.OK).body(JsonResult.success(doctorService.getModalTreatment(name)));
+	public ResponseEntity<JsonResult> modalTreatment(@RequestParam(value="name", required=true, defaultValue="") String name,
+			  										 @RequestParam(value="page", required = true, defaultValue = "0") int page){
+		return ResponseEntity.status(HttpStatus.OK).body(JsonResult.success(doctorService.getModalTreatment(name, page)));
 	}
 }

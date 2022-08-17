@@ -1,6 +1,8 @@
 package com.example.demo.doctor.repository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,16 +27,28 @@ public class DoctorRepository {
 		return sqlSession.selectList("doctor.getTreatList", no);
 	}
 
-	public List<DiseaseDataVo> getModalDiease(String name) {
-		return sqlSession.selectList("doctor.getDiease", name);
+	public List<DiseaseDataVo> getModalDiease(String name, int page) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("name", name);
+		map.put("page", page);
+		
+		return sqlSession.selectList("doctor.getDiease", map);
 	}
 
-	public List<MedicineDataVo> getModalPrescription(String name) {
-		return sqlSession.selectList("doctor.getMedicine", name);
+	public List<MedicineDataVo> getModalPrescription(String name, int page) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("name", name);
+		map.put("page", page);
+		
+		return sqlSession.selectList("doctor.getMedicine", map);
 	}
 
-	public List<MedicineDataVo> getModalTreatment(String name) {
-		return sqlSession.selectList("doctor.getTreatment", name);
+	public List<MedicineDataVo> getModalTreatment(String name, int page) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("name", name);
+		map.put("page", page);
+		
+		return sqlSession.selectList("doctor.getTreatment", map);
 	}
 
 	public Boolean doctorSuccess(DiagnosisVo diagnosisVo) {
