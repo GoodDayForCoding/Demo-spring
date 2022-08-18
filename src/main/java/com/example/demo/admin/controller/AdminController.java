@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.admin.service.AdminService;
@@ -24,10 +25,11 @@ public class AdminController {
 	private AdminService adminService;
 
 	@GetMapping("")
-	public ResponseEntity<JsonResult> index() {
-		return ResponseEntity.status(HttpStatus.OK).body(JsonResult.success(adminService.getHospitalList()));
+	public ResponseEntity<JsonResult> index(
+			@RequestParam(value = "kw", required = true, defaultValue = "") String keyword) {
+		return ResponseEntity.status(HttpStatus.OK).body(JsonResult.success(adminService.getHospitalList(keyword)));
 	}
-	
+
 	@GetMapping("/{no}")
 	public ResponseEntity<JsonResult> index(@PathVariable("no") Long no) {
 		return ResponseEntity.status(HttpStatus.OK).body(JsonResult.success(adminService.getHospitalOne(no)));
@@ -45,10 +47,22 @@ public class AdminController {
 		Boolean result = adminService.hospitalRemove(no);
 		return ResponseEntity.status(HttpStatus.OK).body(JsonResult.success(result ? no : null));
 	}
-	
+
 	@PutMapping("/{no}")
 	public ResponseEntity<JsonResult> update(@PathVariable("no") Long no, @RequestBody HospitalVo hospitalVo) {
-		Boolean result = adminService.hospitalupdate(hospitalVo);
+		Boolean result = adminService.hospitalUpdate(hospitalVo);
 		return ResponseEntity.status(HttpStatus.OK).body(JsonResult.success(result ? no : null));
+	}
+
+	@GetMapping("/diseasedata")
+	public ResponseEntity<JsonResult> diseaseData(
+			@RequestParam(value = "kw", required = true, defaultValue = "") String keyword) {
+		return ResponseEntity.status(HttpStatus.OK).body(JsonResult.success(adminService.getDiseaseDataList(keyword)));
+	}
+
+	@GetMapping("/medicinedata")
+	public ResponseEntity<JsonResult> medicineData(
+			@RequestParam(value = "kw", required = true, defaultValue = "") String keyword) {
+		return ResponseEntity.status(HttpStatus.OK).body(JsonResult.success(adminService.getMedicineDataList(keyword)));
 	}
 }

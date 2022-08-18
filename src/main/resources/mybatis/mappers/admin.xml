@@ -1,10 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="admin">
-	<select id="findAll" resultType="hospitalvo">
+	<select id="findAll" resultType="hospitalvo"
+		parameterType="string">
+		<choose>
+			<when test="keyword == null or keyword == ''">
 		<![CDATA[
-		  select no, name, address, phone_number, url, is_active from hospital where is_active = 1
+		  select no, name, address, phone_number, url, is_active from hospital where is_active = 1 order by no desc
 		]]>
+			</when>
+			<otherwise>
+		<![CDATA[
+		  select no, name, address, phone_number, url, is_active from hospital where is_active = 1 and name like '%${keyword}%' order by no desc
+		]]>
+			</otherwise>
+		</choose>
 	</select>
 
 	<select id="findByNo" parameterType="long"
@@ -48,7 +58,40 @@
 	</update>
 	<update id="updateHospitalAdmin" parameterType="employeevo">
 		<![CDATA[
-			update employee set address = #{address}, phone_number = #{phoneNumber} where hospital_no = #{hospitalNo};
+			update employee set email = #{email}, address = #{address}, phone_number = #{phoneNumber} where hospital_no = #{hospitalNo};
 		]]>
 	</update>
+
+	<select id="findAllDiseaseData" resultType="diseasedatavo"
+		parameterType="string">
+		<choose>
+			<when test="keyword == null or keyword == ''">
+		<![CDATA[
+		  select disease_number, disease_name from disease_data order by disease_number asc
+		]]>
+			</when>
+			<otherwise>
+		<![CDATA[
+		  select disease_number, disease_name from disease_data where disease_number like '%${keyword}%' or disease_name like '%${keyword}%' order by disease_number asc
+		]]>
+			</otherwise>
+		</choose>
+	</select>
+
+
+	<select id="findAllMedicineData" resultType="medicinedatavo"
+		parameterType="string">
+		<choose>
+			<when test="keyword == null or keyword == ''">
+		<![CDATA[
+		  select medicine_number, medicine_name from medicine_data order by medicine_number asc
+		]]>
+			</when>
+			<otherwise>
+		<![CDATA[
+		  select medicine_number, medicine_name from medicine_data where medicine_number like '%${keyword}%' or medicine_name like '%${keyword}%' order by medicine_number asc
+		]]>
+			</otherwise>
+		</choose>
+	</select>
 </mapper>
