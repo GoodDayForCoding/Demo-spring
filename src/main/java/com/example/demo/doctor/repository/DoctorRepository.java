@@ -70,6 +70,18 @@ public class DoctorRepository {
 	public Boolean updateAppointment(AppointmentVo appointmentVo) {
 		return sqlSession.update("doctor.updateAppointment", appointmentVo) == 1;
 	}
+
+	public int dieaseTotalCount(String keyword) {
+		return sqlSession.selectOne("doctor.dieaseCount", keyword);
+	}
+
+	public int prescriptionCount(String name) {
+		return sqlSession.selectOne("doctor.medicineCount", name);
+	}
+
+	public int treatmentCount(String name) {
+		return sqlSession.selectOne("doctor.injectionCount", name);
+	}
 	
 	
 	

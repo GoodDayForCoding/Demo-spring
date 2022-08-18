@@ -10,8 +10,9 @@ import lombok.ToString;
 public class DoctorVo {
 	
 	private Long appointmentNo;			// 예약번호
-	private String appointmentDate; 		// 내원날짜
-	private String appointmentRemark;		// 내원시 기록한 내용
+	private String appointmentDate; 	// 내원날짜
+	private String appointmentRemark;	// 내원시 기록한 내용
+	private Long status;				// 예약 상태
 	
 	private Long patientNo;				// 환자번호
 	private String patientName;				// 환자이름
