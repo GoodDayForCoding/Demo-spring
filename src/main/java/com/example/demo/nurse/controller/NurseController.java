@@ -74,4 +74,5 @@ public class NurseController {
 		Boolean result = nurseService.modifyApointment(appointmentVo);
 		return ResponseEntity.status(HttpStatus.OK).body(JsonResult.success(result ? no : null));
 	}
+	
 }

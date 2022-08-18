@@ -17,5 +17,5 @@ public class PatientVo {
 	private int gender;
 	private int hasInsurance;
 	private String regDate;
-	private Long hopitalNo;
+	private Long hospitalNo;
 }
