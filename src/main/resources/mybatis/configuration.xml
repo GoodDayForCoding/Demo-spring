@@ -11,31 +11,32 @@
 		<typeAlias type="com.example.demo.vo.EmployeeVo"
 			alias="employeevo" />
 		<typeAlias type="com.example.demo.vo.DoctorVo"
-			alias="doctorvo"/>
+			alias="doctorvo" />
 		<typeAlias type="com.example.demo.vo.DiseaseDataVo"
-			alias="diseasedatavo"/>	
+			alias="diseasedatavo" />
 		<typeAlias type="com.example.demo.vo.MedicineDataVo"
-			alias="medicinedatavo"/>
+			alias="medicinedatavo" />
 		<typeAlias type="com.example.demo.vo.PrescriptionVo"
-			alias="prescriptionvo"/>
+			alias="prescriptionvo" />
 		<typeAlias type="com.example.demo.vo.DiseaseVo"
-			alias="diseasevo"/>
+			alias="diseasevo" />
 		<typeAlias type="com.example.demo.vo.TreatmentVo"
-			alias="treatmentvo"/>
+			alias="treatmentvo" />
 		<typeAlias type="com.example.demo.vo.DiagnosisVo"
-			alias="diagnosisvo"/>
+			alias="diagnosisvo" />
 		<typeAlias type="com.example.demo.vo.AppointmentVo"
-			alias="appointmentvo"/>
+			alias="appointmentvo" />
 		<typeAlias type="com.example.demo.vo.PatientVo"
-			alias="patientvo"/>
+			alias="patientvo" />
 		<typeAlias type="com.example.demo.vo.NurseVo"
-			alias="nursevo"/>
+			alias="nursevo" />
 	</typeAliases>
 
 	<mappers>
 		<mapper resource="mybatis/mappers/admin.xml" />
+		<mapper resource="mybatis/mappers/hospitaladmin.xml" />
 		<mapper resource="mybatis/mappers/doctor.xml" />
 		<mapper resource="mybatis/mappers/nurse.xml" />
-		
+
 	</mappers>
 </configuration>

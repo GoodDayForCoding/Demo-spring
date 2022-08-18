@@ -7,8 +7,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.admin.repository.AdminRepository;
+import com.example.demo.vo.DiseaseDataVo;
 import com.example.demo.vo.EmployeeVo;
 import com.example.demo.vo.HospitalVo;
+import com.example.demo.vo.MedicineDataVo;
 
 @Service
 public class AdminService {
@@ -16,8 +18,8 @@ public class AdminService {
 	@Autowired
 	private AdminRepository adminRepository;
 
-	public List<HospitalVo> getHospitalList() {
-		return adminRepository.findAll();
+	public List<HospitalVo> getHospitalList(String keyword) {
+		return adminRepository.findAll(keyword);
 	}
 
 	public HospitalVo getHospitalOne(Long no) {
@@ -46,14 +48,23 @@ public class AdminService {
 	}
 
 	@Transactional
-	public Boolean hospitalupdate(HospitalVo hospitalVo) {
+	public Boolean hospitalUpdate(HospitalVo hospitalVo) {
 		adminRepository.updateHospital(hospitalVo);
 
 		EmployeeVo employeeVo = new EmployeeVo();
+		employeeVo.setEmail(hospitalVo.getName() + "@medireco.com");
 		employeeVo.setAddress(hospitalVo.getAddress());
 		employeeVo.setPhoneNumber(hospitalVo.getPhoneNumber());
 		employeeVo.setHospitalNo(hospitalVo.getNo());
 
 		return adminRepository.updateHospitalAdmin(employeeVo);
+	}
+
+	public List<DiseaseDataVo> getDiseaseDataList(String keyword) {
+		return adminRepository.findAllDiseaseData(keyword);
+	}
+
+	public List<MedicineDataVo> getMedicineDataList(String keyword) {
+		return adminRepository.findAllMedicineData(keyword);
 	}
 }
