@@ -1,7 +1,10 @@
 package com.example.demo.doctor.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.ibatis.ognl.ASTBitNegate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,33 +21,16 @@ import com.example.demo.vo.TreatmentVo;
 
 @Service
 public class DoctorService {
+	private int PAGE_SIZE = 10;
 
 	@Autowired
 	private DoctorRepository doctorRepository;
+	
 
 	public List<DoctorVo> getTreatList(Long no) {
 		return doctorRepository.getTreatList(no);
 	}
 	
-	
-	
-
-	
-	public List<DiseaseDataVo> getModalDiease(String name, int page) {
-		return doctorRepository.getModalDiease(name, page);
-	}
-
-	public List<MedicineDataVo> getModalPrescription(String name, int page) {
-		return doctorRepository.getModalPrescription(name, page);
-	}
-
-	public List<MedicineDataVo> getModalTreatment(String name, int page) {
-		return doctorRepository.getModalTreatment(name, page);
-	}
-
-
-
-
 	@Transactional
 	public Boolean doctorSuccess(DoctorVo doctorVo) {
 		Boolean status = false;
@@ -86,6 +72,52 @@ public class DoctorService {
 		status =doctorRepository.updateAppointment(appointmentVo);
 		
 		return status;
+	}
+
+	
+	public Map<String, Object> getModalPrescription(String name, int currentPage) {
+		
+		int totalCount = doctorRepository.prescriptionCount(name);
+		
+		int page = (currentPage - 1) * PAGE_SIZE;
+		
+		List<MedicineDataVo> list = doctorRepository.getModalPrescription(name, page);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list);
+		map.put("totalCount", totalCount);
+		
+		return map;
+	}
+
+	public Map<String, Object> getModalTreatment(String name, int currentPage) {
+		int totalCount = doctorRepository.treatmentCount(name);
+		
+		int page = (currentPage - 1) * PAGE_SIZE;
+		
+		List<MedicineDataVo> list = doctorRepository.getModalTreatment(name, page);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list);
+		map.put("totalCount", totalCount);
+		
+		
+		return map;
+	}
+
+	public Map<String, Object> getModalDiease(String keyword, int currentPage) {
+
+		int totalCount = doctorRepository.dieaseTotalCount(keyword);
+
+		int page = (currentPage - 1) * PAGE_SIZE;
+		
+		List<DiseaseDataVo> list = doctorRepository.getModalDiease(keyword, page);
+
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		map.put("list", list);
+		map.put("totalCount", totalCount);
+		return map;
 	}
 	
 }
