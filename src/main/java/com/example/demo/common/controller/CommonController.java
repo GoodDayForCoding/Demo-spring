@@ -47,4 +47,5 @@ public class CommonController {
 	public ResponseEntity<JsonResult> attendanceScheduleDelete(@PathVariable("no") Long no) {
 		return ResponseEntity.status(HttpStatus.OK).body(JsonResult.success(commonService.deleteAttendanceSchedule(no)));
 	}
+	
 }
