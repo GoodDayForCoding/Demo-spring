@@ -29,7 +29,9 @@
 		<typeAlias type="com.example.demo.vo.PatientVo"
 			alias="patientvo" />
 		<typeAlias type="com.example.demo.vo.NurseVo"
-			alias="nursevo" />
+			alias="nursevo"/>
+			<typeAlias type="com.example.demo.vo.AttendanceScheduleVo"
+			alias="attendanceschedulevo"/>
 	</typeAliases>
 
 	<mappers>
@@ -37,6 +39,6 @@
 		<mapper resource="mybatis/mappers/hospitaladmin.xml" />
 		<mapper resource="mybatis/mappers/doctor.xml" />
 		<mapper resource="mybatis/mappers/nurse.xml" />
-
+		<mapper resource="mybatis/mappers/common.xml" />
 	</mappers>
 </configuration>

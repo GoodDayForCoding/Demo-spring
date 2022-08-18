@@ -3,12 +3,17 @@
 <mapper namespace="nurse">
 	<select id="findAllPatients" resultType="patientVo">
 		<![CDATA[
-			select * from patient
+			select * from patient;
 		]]>
 	</select>
 	<select id="findPatientByNo" resultType="patientVo">
 		<![CDATA[
-			select * from patient where no = #{no}
+			select * from patient where no = #{no};
+		]]>
+	</select>
+	<select id="findPatientByName" resultType="patientVo">
+		<![CDATA[
+			select * from patient where name = #{name};
 		]]>
 	</select>
 	<select id="findAllAppointments" resultType="nurseVo">
@@ -19,15 +24,15 @@
 			    b.name as patientName,
 			    b.rrn as patientAge,
 			    b.gender as patientGender,
-			    a.remarks as appointmentRemark,
+			    a.remarks as appointmentRemarks,
 			    a.status as appointmentStatus,
 			    c.name as doctorName
 			FROM appointment a
 			LEFT JOIN patient b on a.patient_no = b.no
-			LEFT JOIN employee c on a.employee_no = c.no
+			LEFT JOIN employee c on a.employee_no = c.no;
 		]]>
 	</select>
-	<select id="findAppointmentByNo" resultType="nurseVo">
+	<select id="findAppointmentByPatientNo" resultType="nurseVo">
 	<![CDATA[
 			SELECT 
 				a.no as appointmentNo,
@@ -41,7 +46,26 @@
 			FROM appointment a
 			LEFT JOIN patient b on a.patient_no = b.no
 			LEFT JOIN employee c on a.employee_no = c.no
-			WHERE a.patient_no = {no};
+			WHERE a.patient_no = #{no};
+			
+		]]>
+	</select>
+	<select id="findAppointmentByPatientName" resultType="nurseVo">
+	<![CDATA[
+			SELECT
+				a.no as appointmentNo,
+			    a.date as appointmentDate,
+			    b.name as patientName,
+			    b.rrn as patientAge,
+			    b.gender as patientGender,
+			    a.remarks as appointmentRemarks,
+			    a.status as appointmentStatus,
+			    c.name as doctorName
+			FROM
+				appointment a
+			LEFT JOIN patient b ON patient_no = b.no
+			LEFT JOIN employee c ON employee_no = c.no
+			WHERE b.name = #{patientName};
 			
 		]]>
 	</select>

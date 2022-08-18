@@ -52,9 +52,24 @@ public class NurseRepository {
 		return sqlSession.selectList("nurse.findAllAppointments");
 	}
 
-	public NurseVo selectAppointment(Long no) {
+	public NurseVo selectAppointmentByPatientNo(Long no) {
 		
-		return sqlSession.selectOne("nurse.findAppointmentByNo", no);
+		return sqlSession.selectOne("nurse.findAppointmentByPatientNo", no);
+	}
+
+
+	public List<NurseVo> selectAppointmentByPatientName(String patientName) {
+		return sqlSession.selectList("nurse.findAppointmentByPatientName", patientName);
+	}
+
+
+	public PatientVo selectPatientByNo(Long no) {
+		return sqlSession.selectOne("nurse.findPatientByNo", no);
+	}
+
+
+	public List<PatientVo> selectPatientByName(String name) {
+		return sqlSession.selectList("nurse.findPatientByName", name);
 	}
 
 }
