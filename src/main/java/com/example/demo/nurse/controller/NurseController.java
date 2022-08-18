@@ -1,5 +1,8 @@
 package com.example.demo.nurse.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,9 +31,14 @@ public class NurseController {
 		return ResponseEntity.status(HttpStatus.OK).body(JsonResult.success(nurseService.findPatientList()));
 	}
 	
-	@GetMapping("/patient/{no}")
+	@GetMapping("/patientByNo/{no}")
 	public ResponseEntity<JsonResult> patientDetails(@PathVariable("no") Long no) {
-		return ResponseEntity.status(HttpStatus.OK).body(JsonResult.success(nurseService.findPatient(no)));
+		return ResponseEntity.status(HttpStatus.OK).body(JsonResult.success(nurseService.findPatientByNo(no)));
+	}
+	
+	@GetMapping("/patientByName/{name}")
+	public ResponseEntity<JsonResult> patientDetails(@PathVariable("name") String name) {
+		return ResponseEntity.status(HttpStatus.OK).body(JsonResult.success(nurseService.findPatientByName(name)));
 	}
 	
 	@PostMapping("/patient")
@@ -44,9 +52,15 @@ public class NurseController {
 		return ResponseEntity.status(HttpStatus.OK).body(JsonResult.success(nurseService.findAppointmentList()));
 	}
 	
-	@GetMapping("/appointment/{no}")
+	@GetMapping("/appointmentByPatientNo/{no}")
 	public ResponseEntity<JsonResult> appointmentDetails(@PathVariable("no") Long no) {
-		return ResponseEntity.status(HttpStatus.OK).body(JsonResult.success(nurseService.findAppointment(no)));
+		return ResponseEntity.status(HttpStatus.OK).body(JsonResult.success(nurseService.findAppointmentByPatientNo(no)));
+	}
+	
+	@GetMapping("/appointmentByPatientName/{patientName}")
+	public ResponseEntity<JsonResult> appointmentDetails(@PathVariable("patientName") String patientName) {
+	
+		return ResponseEntity.status(HttpStatus.OK).body(JsonResult.success(nurseService.findAppointmentByPatientName(patientName)));
 	}
 	
 	@PostMapping("/appointment")

@@ -49,9 +49,22 @@ public class NurseService {
 		return nurseRepository.selectAppointmentList();
 	}
 
-	public NurseVo findAppointment(Long no) {
+	public NurseVo findAppointmentByPatientNo(Long no) {
 
-		return nurseRepository.selectAppointment(no);
+		return nurseRepository.selectAppointmentByPatientNo(no);
+	}
+
+	public List<NurseVo> findAppointmentByPatientName(String patientName) {
+		
+		return nurseRepository.selectAppointmentByPatientName(patientName);
+	}
+
+	public PatientVo findPatientByNo(Long no) {
+		return nurseRepository.selectPatientByNo(no);
+	}
+
+	public List<PatientVo> findPatientByName(String name) {
+		return nurseRepository.selectPatientByName(name);
 	}
 
 	
