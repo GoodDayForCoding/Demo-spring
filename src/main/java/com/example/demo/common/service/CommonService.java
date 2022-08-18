@@ -19,5 +19,25 @@ public class CommonService {
 		return commonRepository.selectAttendanceScheduleList();
 	}
 
+	public AttendanceScheduleVo findAttendanceScheduleByNo(Long no) {
+		
+		return commonRepository.selectAttendanceScheduleByNo();
+	}
+
+	public Boolean addAttendanceSchedule(AttendanceScheduleVo attendanceScheduleVo) {
+		// TODO Auto-generated method stub
+		return commonRepository.insertAttendanceSchedule(attendanceScheduleVo);
+	}
+
+	public Boolean updateAttendanceSchedule(Long no) {
+		// TODO Auto-generated method stub
+		return commonRepository.updateAttendanceSchedule(no);
+	}
+	
+	public Boolean deleteAttendanceSchedule(Long no) {
+		// TODO Auto-generated method stub
+		return commonRepository.deleteAttendanceSchedule(no);
+	}
+
 
 }
