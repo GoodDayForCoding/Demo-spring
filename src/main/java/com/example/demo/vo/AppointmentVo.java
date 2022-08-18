@@ -13,6 +13,7 @@ public class AppointmentVo {
 	private int status;
 	private String date;
 	private String remarks;
-	private String doctorName;
+	private Long employeeNo;
 	private Long patientNo;
+	private Long hospitalNo;
 }
