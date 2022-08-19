@@ -2,6 +2,7 @@ package com.example.demo.nurse.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -42,9 +43,10 @@ public class NurseController {
 	}
 	
 	@PostMapping("/patient")
-	public ResponseEntity<JsonResult> patientAdd(@RequestBody PatientVo patientVo) {
-		nurseService.addPatient(patientVo);
-		return ResponseEntity.status(HttpStatus.OK).body(JsonResult.success(patientVo));
+	public ResponseEntity<JsonResult> firstPatientAdd(@RequestBody Map<String, Object> param) {
+		Boolean result = nurseService.addPatient(param);
+		
+		return ResponseEntity.status(HttpStatus.OK).body(JsonResult.success(result));
 	}
 	
 	@GetMapping("/appointment")

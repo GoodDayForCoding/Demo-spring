@@ -18,8 +18,11 @@ public class NurseRepository {
 	private SqlSession sqlSession;
 
 	
-	public Boolean insertPatient(PatientVo patientVo) {
-		return sqlSession.insert("nurse.insertPatient", patientVo) == 1;
+	public Long insertPatient(PatientVo patientVo) {
+		
+		Long patientNo = (long) sqlSession.insert("nurse.insertPatient", patientVo);
+		
+		return patientNo;
 	}
 
 
