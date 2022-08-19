@@ -16,6 +16,18 @@
 			select * from patient where name = #{name};
 		]]>
 	</select>
+	<insert id="insertPatient" parameterType="patientVo">
+		<![CDATA[
+			insert into patient(name, rrn, address, phone_number, gender, has_insurance, reg_date, hospital_no) 
+			values (#{name},#{rrn}, #{address}, #{phoneNumber}, #{gender}, #{hasInsurance}, #{regDate}, #{hospitalNo});
+		]]>
+		<selectKey keyProperty="no" resultType="long" order="AFTER">
+			<![CDATA[
+				select last_insert_id();
+			]]>
+		</selectKey>
+		
+	</insert>
 	<select id="findAllAppointments" resultType="nurseVo">
 		<![CDATA[
 			SELECT 
@@ -69,4 +81,16 @@
 			
 		]]>
 	</select>
+	<insert id="insertAppointment" parameterType="appointmentVo">
+		<![CDATA[
+			insert into appointment(status, date, remarks, patient_no, employee_no, hospital_no) 
+			values (#{status},#{date}, #{remarks}, #{patientNo}, #{employeeNo}, #{hospitalNo});
+		]]>
+		<selectKey keyProperty="no" resultType="long" order="AFTER">
+			<![CDATA[
+				select last_insert_id();
+			]]>
+		</selectKey>
+		
+	</insert>
 </mapper>

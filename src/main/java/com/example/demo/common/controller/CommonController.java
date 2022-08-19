@@ -52,7 +52,6 @@ public class CommonController {
 		return ResponseEntity.status(HttpStatus.OK).body(JsonResult.success(commonService.deleteAttendanceSchedule(no)));
 	}
 	
-	
 	/*************** 진료 내역 start ******************/
 	@GetMapping("/visitedRecord")
 	public ResponseEntity<JsonResult> visitedRecordList(@RequestParam(value="hospital", required = true, defaultValue = "1") int hospital,
