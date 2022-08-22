@@ -69,6 +69,41 @@ public class CommonRepository {
 			
 			return sqlSession.selectOne("common.findRecordCount", map);
 		}
+
+		public int visitedRecord(int hospital, String date) {	// 날짜선택시 Total
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("hospital", hospital);
+			map.put("date", date);
+			
+			return sqlSession.selectOne("common.findvisitedRecordCount", map);
+		}
+
+		public int visitedRecordDetail(int hospital, String name) {	// 환자선택시 Total
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("hospital", hospital);
+			map.put("name", name);
+			
+			return sqlSession.selectOne("common.findRecordDetailCount", map);
+		}
+
+		public List<Map<String, Object>> visitedRecord(int hospital, String date, int page) {	// 날짜 선택시 데이터
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("hospital", hospital);
+			map.put("date", date);
+			map.put("page", page);
+			
+			return sqlSession.selectList("common.findPatientDate", map);
+		}
+
+		public List<Map<String, Object>> visitedRecordDetail(int hospital, String name, int no, int detailPage) {	 // 환자 선택시 데이터
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("hospital", hospital);
+			map.put("name", name);
+			map.put("no", no);
+			map.put("page", detailPage);
+			
+			return sqlSession.selectList("common.findPatientDetail", map);
+		}
 		
 		/*************** 진료 내역 end ******************/
 		

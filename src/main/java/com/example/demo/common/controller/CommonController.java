@@ -53,13 +53,36 @@ public class CommonController {
 	}
 	
 	/*************** 진료 내역 start ******************/
-	@GetMapping("/visitedRecord")
+	@GetMapping("/menuList")
 	public ResponseEntity<JsonResult> visitedRecordList(@RequestParam(value="hospital", required = true, defaultValue = "1") int hospital,
 														@RequestParam(value="email", required = true, defaultValue = "") String email,
 														@RequestParam(value="role", required = true, defaultValue = "") String role,
 														@RequestParam(value="page", required = true, defaultValue = "1") int page, Model model){
 		Map<String, Object> map = commonService.visitedRecordList(hospital, email, role, page);
 		model.addAttribute("map", map);
+		return ResponseEntity.status(HttpStatus.OK).body(JsonResult.success(model));
+	}
+	
+	@GetMapping("/visitedRecord")
+	public ResponseEntity<JsonResult> visitedRecord(@RequestParam(value="hospital", required = true, defaultValue = "1") int hospital,													
+													@RequestParam(value="date", required = true, defaultValue = "") String date,
+													@RequestParam(value="page", required = true, defaultValue = "1") int page, 
+													Model model){
+		
+		Map<String, Object> map = commonService.visitedRecord(hospital, date, page);
+		model.addAttribute("map", map);
+		return ResponseEntity.status(HttpStatus.OK).body(JsonResult.success(model));
+	}
+	
+	@GetMapping("/recordDetail")
+	public ResponseEntity<JsonResult> visitedRecordDetail (@RequestParam(value="hospital", required = true, defaultValue = "1") int hospital,
+															@RequestParam(value="name", required = true, defaultValue = "") String name,
+															@RequestParam(value="no", required = true, defaultValue = "1") int no,
+															@RequestParam(value="detailPage", required = true, defaultValue = "1") int detailPage,
+															Model model){
+		Map<String, Object> map = commonService.visitedRecordDetail(hospital, name, no, detailPage);
+		model.addAttribute("map", map);
+		
 		return ResponseEntity.status(HttpStatus.OK).body(JsonResult.success(model));
 	}
 	
