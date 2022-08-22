@@ -50,7 +50,7 @@ public class CommonService {
 		int page = (currentPage - 1) * 10;
 		
 		List<DoctorVo> list;
-		if(role == "의사") {
+		if(role == "DOCTOR") {
 			list = commonRepository.visitedRecordList(hospital, name, page);
 		} else {
 			list = commonRepository.visitedRecordList(hospital, page);
@@ -62,6 +62,36 @@ public class CommonService {
 		
 		return map;
 	}
+	
+	public Map<String, Object> visitedRecord(int hospital, String date, int currentPage){
+		int total = commonRepository.visitedRecord(hospital, date);
+		
+		int page = (currentPage - 1) * 10;
+				
+		List<Map<String, Object>> list = commonRepository.visitedRecord(hospital, date, page);
+				
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("totalCount", total);
+		map.put("date", date);
+		map.put("data", list);
+		
+		return map;
+	}
+	
+	public Map<String, Object> visitedRecordDetail(int hospital, String name, int no, int currentPage){
+		int total = commonRepository.visitedRecordDetail(hospital, name);
+		
+		int detailPage = (currentPage - 1) * 10;	
+	
+		List<Map<String, Object>> list = commonRepository.visitedRecordDetail(hospital, name,no, detailPage);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("totalCount", total);
+		map.put("data", list);
+		
+		return map;
+	}
+	
 
 	/*************** 진료 내역 end ******************/
 }
