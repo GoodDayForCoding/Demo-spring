@@ -44,7 +44,6 @@ public class NurseService {
 	public Boolean addPatient(Map<String, Object> param) {
 		PatientVo patientVo = new PatientVo();
 		AppointmentVo appointmentVo = new AppointmentVo();
-		System.out.println(param);		
 		String name = (String) param.get("name");
 		String rrn = (String) param.get("rrn");
 		String address = (String) param.get("address");
@@ -52,15 +51,14 @@ public class NurseService {
 		int gender =  Integer.parseInt(String.valueOf(param.get("gender")));
 		int hasInsurance = Integer.parseInt(String.valueOf(param.get("hasInsurance")));
 		String regDate = (String) param.get("regDate");
-		//Long hospitalNo = (long) param.get("hospitalNo");
-		//Long employeeNo = (long) param.get("employeeNo");
-		//int status = (int) param.get("status");
-		 
-		Long hospitalNo = Long.valueOf((String) param.get("hospitalNo"));
-		Long employeeNo = Long.valueOf((String) param.get("employeeNo"));
-		String remarks = (String) param.get("remarks");
-		int status = Integer.valueOf((String) param.get("status"));
+		
+		Long hospitalNo = Long.parseLong((String)param.get("hospitalNo"));
 
+		Long employeeNo =  ((Number)param.get("employeeNo")).longValue();
+
+		String remarks = (String) param.get("remarks");
+
+		int status =  (int) (param.get("status"));
 		
 		patientVo.setName(name);
 		patientVo.setRrn(rrn);
@@ -71,10 +69,9 @@ public class NurseService {
 		patientVo.setRegDate(regDate);
 		patientVo.setHospitalNo(hospitalNo);
 
+		nurseRepository.insertPatient(patientVo);
+		Long patientNo = patientVo.getNo();
 		
-		Long patientNo = nurseRepository.insertPatient(patientVo);
-		
-
 		appointmentVo.setStatus(status);
 		appointmentVo.setDate(regDate);
 		appointmentVo.setRemarks(remarks);
