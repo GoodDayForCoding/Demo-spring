@@ -27,20 +27,9 @@
 			]]>	
 		</selectKey>
 	</insert>
-	<select id="findAllAppointments" resultType="nurseVo">
+	<select id="findAllAppointments" resultType="appointmentVo">
 		<![CDATA[
-			SELECT 
-				a.no as appointmentNo,
-				a.date as appointmentDate,
-			    b.name as patientName,
-			    b.rrn as patientAge,
-			    b.gender as patientGender,
-			    a.remarks as appointmentRemarks,
-			    a.status as appointmentStatus,
-			    c.name as doctorName
-			FROM appointment a
-			LEFT JOIN patient b on a.patient_no = b.no
-			LEFT JOIN employee c on a.employee_no = c.no;
+			SELECT * FROM appointment; 
 		]]>
 	</select>
 	<select id="findAppointmentByPatientNo" resultType="nurseVo">

@@ -50,7 +50,7 @@ public class NurseRepository {
 		return sqlSession.selectOne("nurse.findPatientByNo", no);
 	}
 
-	public List<NurseVo> selectAppointmentList() {
+	public List<AppointmentVo> selectAppointmentList() {
 		
 		return sqlSession.selectList("nurse.findAllAppointments");
 	}

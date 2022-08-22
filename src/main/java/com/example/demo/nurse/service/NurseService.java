@@ -86,7 +86,7 @@ public class NurseService {
 		return true;
 	}
 
-	public List<NurseVo> findAppointmentList() {
+	public List<AppointmentVo> findAppointmentList() {
 
 		return nurseRepository.selectAppointmentList();
 	}
