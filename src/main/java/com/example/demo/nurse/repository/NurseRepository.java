@@ -18,8 +18,11 @@ public class NurseRepository {
 	private SqlSession sqlSession;
 
 	
-	public Boolean insertPatient(PatientVo patientVo) {
-		return sqlSession.insert("nurse.insertPatient", patientVo) == 1;
+	public Long insertPatient(PatientVo patientVo) {
+		
+		Long patientNo = (long) sqlSession.insert("nurse.insertPatient", patientVo);
+		
+		return patientNo;
 	}
 
 
@@ -47,7 +50,7 @@ public class NurseRepository {
 		return sqlSession.selectOne("nurse.findPatientByNo", no);
 	}
 
-	public List<NurseVo> selectAppointmentList() {
+	public List<AppointmentVo> selectAppointmentList() {
 		
 		return sqlSession.selectList("nurse.findAllAppointments");
 	}
