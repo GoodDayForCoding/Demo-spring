@@ -20,9 +20,11 @@ public class NurseRepository {
 	
 	public Long insertPatient(PatientVo patientVo) {
 		
-		Long patientNo = (long) sqlSession.insert("nurse.insertPatient", patientVo);
 		
-		return patientNo;
+		Long result = (long) sqlSession.insert("nurse.insertPatient", patientVo);
+		
+
+		return result;
 	}
 
 
