@@ -6,6 +6,9 @@ spring:
    mvc:
       static-path-pattern: /assets/**
       throw-exception-if-no-handler-found: true
+      hiddenmethod:
+        filter:
+          enabled: true
    web:
       resources:
          static-locations: classpath:/assets/
