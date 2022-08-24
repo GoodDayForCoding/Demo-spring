@@ -3,6 +3,7 @@ package com.example.demo.admin.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,6 +18,9 @@ public class AdminService {
 
 	@Autowired
 	private AdminRepository adminRepository;
+
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	public List<HospitalVo> getHospitalList(String keyword) {
 		return adminRepository.findAll(keyword);
@@ -33,7 +37,7 @@ public class AdminService {
 		EmployeeVo employeeVo = new EmployeeVo();
 		employeeVo.setName("관리자");
 		employeeVo.setEmail(hospitalVo.getName() + "@medireco.com");
-		employeeVo.setPassword("admin");
+		employeeVo.setPassword(bCryptPasswordEncoder.encode("admin"));
 		employeeVo.setAddress(hospitalVo.getAddress());
 		employeeVo.setPhoneNumber(hospitalVo.getPhoneNumber());
 		employeeVo.setHospitalNo(hospitalVo.getNo());

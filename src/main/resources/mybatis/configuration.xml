@@ -40,5 +40,6 @@
 		<mapper resource="mybatis/mappers/doctor.xml" />
 		<mapper resource="mybatis/mappers/nurse.xml" />
 		<mapper resource="mybatis/mappers/common.xml" />
+		<mapper resource="mybatis/mappers/auth.xml" />
 	</mappers>
 </configuration>
