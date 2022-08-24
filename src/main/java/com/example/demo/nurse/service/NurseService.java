@@ -106,5 +106,10 @@ public class NurseService {
 		return nurseRepository.selectPatientByName(name);
 	}
 
+	public List<AppointmentVo> findAppointmentByDate(String date) {
+
+		return nurseRepository.selectAppointmentByDate(date);
+	}
+
 	
 }

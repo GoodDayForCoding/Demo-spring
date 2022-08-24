@@ -77,4 +77,9 @@ public class NurseRepository {
 		return sqlSession.selectList("nurse.findPatientByName", name);
 	}
 
+
+	public List<AppointmentVo> selectAppointmentByDate(String date) {
+		return sqlSession.selectList("nurse.findAppointmentByDate", date);
+	}
+
 }

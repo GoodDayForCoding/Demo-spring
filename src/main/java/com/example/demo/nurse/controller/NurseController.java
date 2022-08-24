@@ -54,6 +54,11 @@ public class NurseController {
 		return ResponseEntity.status(HttpStatus.OK).body(JsonResult.success(nurseService.findAppointmentList()));
 	}
 	
+	@GetMapping("/appointmentByDate/{date}")
+	public ResponseEntity<JsonResult> appointmentDetailsByDate(@PathVariable("date") String date) {
+		return ResponseEntity.status(HttpStatus.OK).body(JsonResult.success(nurseService.findAppointmentByDate(date)));
+	}
+	
 	@GetMapping("/appointmentByPatientNo/{no}")
 	public ResponseEntity<JsonResult> appointmentDetails(@PathVariable("no") Long no) {
 		return ResponseEntity.status(HttpStatus.OK).body(JsonResult.success(nurseService.findAppointmentByPatientNo(no)));

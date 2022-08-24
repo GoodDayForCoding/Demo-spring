@@ -50,6 +50,12 @@
 			
 		]]>
 	</select>
+	<select id="findAppointmentByDate" resultType="appointmentVo">
+	<![CDATA[
+			SELECT * FROM appointment WHERE DATE(date) = #{date};
+			
+		]]>
+	</select>
 	<select id="findAppointmentByPatientName" resultType="nurseVo">
 	<![CDATA[
 			SELECT
