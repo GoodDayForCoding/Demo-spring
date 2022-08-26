@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.common.repository.CommonRepository;
 import com.example.demo.vo.AttendanceScheduleVo;
-import com.example.demo.vo.DoctorVo;
 
 @Service
 public class CommonService {
@@ -49,13 +48,8 @@ public class CommonService {
 		int totalCount = commonRepository.visitedRecordList(hospital, name, role);
 		int page = (currentPage - 1) * 10;
 		
-		List<DoctorVo> list;
-		if(role == "DOCTOR") {
-			list = commonRepository.visitedRecordList(hospital, name, page);
-		} else {
-			list = commonRepository.visitedRecordList(hospital, page);
-		}
-		
+		List<Map<String, Object>> list = commonRepository.visitedRecordList(hospital, name, page, role);;
+				
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("totalCount", totalCount);
 		map.put("data", list);

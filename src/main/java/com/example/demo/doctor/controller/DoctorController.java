@@ -1,5 +1,7 @@
 package com.example.demo.doctor.controller;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,14 +33,18 @@ public class DoctorController {
 	}
 	
 	@GetMapping("/{no}")
-	public ResponseEntity<JsonResult> index(@PathVariable("no") Long no){
-		return ResponseEntity.status(HttpStatus.OK).body(JsonResult.success(doctorService.getTreatList(no)));
+	public ResponseEntity<JsonResult> index(@PathVariable("no") Long no, Model model){
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("data", doctorService.getTreatList(no));
+		map.put("totalCount", doctorService.getTreatCount(no));
+		model.addAttribute("map", map);
+		return ResponseEntity.status(HttpStatus.OK).body(JsonResult.success(model));
 	}
 	
 	@PostMapping("")
-	public ResponseEntity<JsonResult> success(@RequestBody DoctorVo doctorVo){
-		doctorService.doctorSuccess(doctorVo);		
-		return ResponseEntity.status(HttpStatus.OK).body(JsonResult.success(doctorVo));		
+	public ResponseEntity<JsonResult> success(@RequestBody HashMap<String, Object> param){
+		Boolean result = doctorService.doctorSuccess(param);		
+		return ResponseEntity.status(HttpStatus.OK).body(JsonResult.success(result));		
 	}
 	
 	
