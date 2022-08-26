@@ -16,4 +16,6 @@ public class AppointmentVo {
 	private Long employeeNo;
 	private Long patientNo;
 	private Long hospitalNo;
+	private String doctorName;
+	private String patientName;
 }
