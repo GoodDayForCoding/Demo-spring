@@ -26,6 +26,10 @@ public class DoctorRepository {
 	public List<DoctorVo> getTreatList(Long no) {
 		return sqlSession.selectList("doctor.getTreatList", no);
 	}
+	
+	public Object getTreatCount(Long no) {
+		return sqlSession.selectOne("doctor.getTreatCount", no);
+	}
 
 	public List<DiseaseDataVo> getModalDiease(String name, int page) {
 		Map<String, Object> map = new HashMap<>();
@@ -55,16 +59,44 @@ public class DoctorRepository {
 		return sqlSession.insert("doctor.insertDiagnosis", diagnosisVo) == 1;
 	}
 
-	public Boolean insertPrescription(PrescriptionVo prescriptionVo) {
-		return sqlSession.insert("doctor.insertPrescription", prescriptionVo) == 1;
+	public Boolean insertPrescription(List<Object> prescription, long no) {
+		boolean result = false;
+		for(int i = 0; i < prescription.size(); i++) {
+			Map<String, Object> map = (Map<String, Object>)prescription.get(i);			
+			map.put("diagnosisNo", no);			
+			String fullDose = map.get("dose").toString() + map.get("medicineUnit").toString();
+			map.put("fullDose", fullDose);
+			//sSystem.out.println(map);
+			result = sqlSession.insert("doctor.insertPrescription", map) == 1;
+		}
+		return result;
 	}
 
-	public Boolean insertDisease(DiseaseVo diseaseVo) {
-		return sqlSession.insert("doctor.insertDisease", diseaseVo) == 1;
+	public Boolean insertDisease(List<Object> disease, long no) {
+		boolean result = false;
+		for(int i = 0; i < disease.size(); i++) {
+			Map<String, Object> map = (Map<String, Object>)disease.get(i);
+			map.put("diagnosisNo", no);
+			result = sqlSession.insert("doctor.insertDisease", map) == 1;
+		}
+		return result;
 	}
 
-	public Boolean insertTreatment(TreatmentVo treatmentVo) {
-		return sqlSession.insert("doctor.insertTreatment", treatmentVo) == 1;		
+	public Boolean insertTreatment(List<Object> treatment, long no) {
+		boolean result = false;
+		if(treatment.size() < 1) {
+			return result;
+		}
+		
+		for(int i = 0; i < treatment.size(); i++) {
+			Map<String, Object> map = (Map<String, Object>)treatment.get(i);
+			map.put("diagnosisNo", no);
+			String fullDose = map.get("dose").toString() + map.get("medicineUnit").toString();
+			map.put("fullDose", fullDose);
+			
+			result = sqlSession.insert("doctor.insertTreatment", map) == 1;
+		}
+		return result;		
 	}
 
 	public Boolean updateAppointment(AppointmentVo appointmentVo) {
@@ -82,6 +114,7 @@ public class DoctorRepository {
 	public int treatmentCount(String name) {
 		return sqlSession.selectOne("doctor.injectionCount", name);
 	}
+
 	
 	
 	

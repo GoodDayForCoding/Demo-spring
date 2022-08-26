@@ -4,15 +4,26 @@
 	<select id="getTreatList" parameterType="long" resultType="doctorvo">
 		<![CDATA[
 			select 
-				a.date as appointmentDate, 
+				a.no as appointmentNo,
+				date_format(a.date, '%Y-%m-%d') as appointmentDate, 
 				a.remarks as appointmentRemark, 
 				b.no as patientNo, 
 				b.name as patientName, 
+				(select concat( CASE WHEN substr(b.rrn, 8, 1) = '1' || substr(b.rrn, 8, 1) = '2' THEN '19'
+								ELSE '20' END, substr(b.rrn, 1, 2), '-', substr(b.rrn, 3, 2), '-', substr(b.rrn, 5, 2) ) as birth
+				 From patient 
+				 where no = #{no}) as patientBirth,
 				a.employee_no as employeeNo
 			from appointment a 
 			left join patient b on a.patient_no = b.no
-			where a.patient_no= #{no}
-			
+			where a.patient_no = (select patient_no from appointment where no = #{no})
+			order by a.no desc , a.date desc 
+		]]>
+	</select>
+	
+	<select id="getTreatCount" parameterType="long" resultType="int">
+		<![CDATA[
+			select count(*) from appointment where patient_no = #{no}
 		]]>
 	</select>
 	
@@ -31,23 +42,23 @@
 		</selectKey>
 	</insert>
 	
-	<insert id="insertPrescription" parameterType="prescriptionVo">
+	<insert id="insertPrescription" parameterType="map">
 		<![CDATA[
 			insert into prescription(medicine_name, dose, dosing_prequency, dosing_days, remark, diagnosis_no) 
-			values (#{medicineName},#{dose},#{dosingPrequency},#{dosingDays},#{remark},#{diagnosisNo});	
+			values (#{medicineName}, #{fullDose}, #{dosingPrequency}, #{dosingDays}, #{remark}, #{diagnosisNo});	
 		]]>
 	</insert>
 	
-	<insert id="insertDisease" parameterType="diseaseVo">
+	<insert id="insertDisease" parameterType="map">
 		<![CDATA[
 			insert into disease(disease_name, diagnosis_no) values (#{diseaseName}, #{diagnosisNo});		
 		]]>
 	</insert>
 		
-	<insert id="insertTreatment" parameterType="treatmentVo">
+	<insert id="insertTreatment" parameterType="map">
 		<![CDATA[
 			insert into treatment(	medicine_name, treat, dose, diagnosis_no) 
-			values (#{medicineName}, #{treat}, #{dose}, #{diagnosisNo});	
+			values (#{medicineName}, #{usage}, #{fullDose}, #{diagnosisNo});	
 		]]>
 	</insert>
 	

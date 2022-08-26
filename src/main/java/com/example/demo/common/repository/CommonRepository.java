@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.example.demo.vo.AttendanceScheduleVo;
-import com.example.demo.vo.DoctorVo;
 
 
 @Repository
@@ -45,21 +44,15 @@ public class CommonRepository {
 
 		
 		/*************** 진료 내역 start ******************/
-		public List<DoctorVo> visitedRecordList(int hospital, String email, int page) {
+		public List<Map<String, Object>> visitedRecordList(int hospital, String email, int page, String role) {
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("hospital", hospital);
 			map.put("email", email);
 			map.put("page", page);
+			map.put("role", role);
 			return sqlSession.selectList("common.findPatientByDoctor", map);
 		}
 
-		public List<DoctorVo> visitedRecordList(int hospital, int page) {
-			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("hospital", hospital);
-			map.put("page", page);
-			
-			return sqlSession.selectList("common.findPatient", map);
-		}
 
 		public int visitedRecordList(int hospital, String name, String role) {
 			Map<String, Object> map = new HashMap<String, Object>();

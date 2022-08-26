@@ -40,54 +40,59 @@
 	</delete>
 	
 	<!-- 진료 내역 start -->
-	<select id="findPatientByDoctor" parameterType="map" resultType="doctorvo">
-		<![CDATA[
-			select 
-				a.no as appointmentNo,
-				date_format(a.date, '%h:%m:%s') as appointmentDate, 
-				a.remarks as appointmentRemark,
-				a.status,
-				b.no as patientNo, 
-				b.name as patientName, 
-				a.employee_no as employeeNo,
-				c.name as employeeName
-			from appointment a 
-				left join patient b on a.patient_no = b.no
-				left join employee c on a.employee_no = c.no
-			where a.hospital_no = #{hospital} 
-				and a.status between 2 and 3
-				and c.email = #{email}
-				and date_format(a.date, '%Y-%m-%d' ) = date_format(now(), '%Y-%m-%d')
-			order by a.status, a.date desc
-			limit #{page}, 10
-		]]>
+	<select id="findPatientByDoctor" parameterType="map" resultType="map">
+		<choose>
+			<when test='role == "DOCTOR"'>
+				<![CDATA[
+					select 
+						a.no as appointmentNo,
+						date_format(a.date, '%h:%m:%s') as appointmentDate, 
+						a.remarks as appointmentRemark,
+						a.status,
+						b.no as patientNo, 
+						b.name as patientName, 
+						a.employee_no as employeeNo,
+						c.name as employeeName
+					from appointment a 
+						left join patient b on a.patient_no = b.no
+						left join employee c on a.employee_no = c.no
+					where a.hospital_no = #{hospital} 
+						and a.status between 2 and 3
+						and c.role = #{role}
+						and c.email = #{email}
+						and date_format(a.date, '%Y-%m-%d' ) = date_format(now(), '%Y-%m-%d')
+					order by a.status, a.date desc
+					limit #{page}, 10
+				]]>
+			</when>
+			<otherwise>
+				<![CDATA[
+					select 
+						a.no as appointmentNo,	
+						date_format(a.date, '%h:%m:%s') as appointmentDate, 
+						a.remarks as appointmentRemark,
+						a.status, 
+						b.no as patientNo, 
+						b.name as patientName, 
+						a.employee_no as employeeNo,
+						c.name as employeeName
+					from appointment a 
+						left join patient b on a.patient_no = b.no
+						left join employee c on a.employee_no = c.no
+					where a.hospital_no = #{hospital} 
+						and a.status between 2 and 3 
+						and date_format(a.date, '%Y-%m-%d' ) = date_format(now(), '%Y-%m-%d')
+					order by a.status, a.date desc	
+					limit #{page}, 10
+				]]>
+			</otherwise>
+		</choose>		
 	</select>
 	
-	<select id="findPatient" parameterType="map" resultType="doctorvo">
-		<![CDATA[
-		select 
-			a.no as appointmentNo,	
-			date_format(a.date, '%h:%m:%s') as appointmentDate, 
-			a.remarks as appointmentRemark,
-			a.status, 
-			b.no as patientNo, 
-			b.name as patientName, 
-			a.employee_no as employeeNo,
-			c.name as employeeName
-		from appointment a 
-			left join patient b on a.patient_no = b.no
-			left join employee c on a.employee_no = c.no
-		where a.hospital_no = #{hospital} 
-			and a.status between 2 and 3 
-			and date_format(a.date, '%Y-%m-%d' ) = date_format(now(), '%Y-%m-%d')
-		order by a.status, a.date desc	
-		limit #{page}, 10
-		]]>
-	</select>
 	
 	<select id="findRecordCount" parameterType="map" resultType="int">
 		<choose>
-			<when test='role == "의사"'>
+			<when test='role == "DOCTOR"'>
 				<![CDATA[
 					select count(*)
 					from appointment a 

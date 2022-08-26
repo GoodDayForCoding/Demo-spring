@@ -55,9 +55,9 @@ public class CommonController {
 	/*************** 진료 내역 start ******************/
 	@GetMapping("/menuList")
 	public ResponseEntity<JsonResult> visitedRecordList(@RequestParam(value="hospital", required = true, defaultValue = "1") int hospital,
-														@RequestParam(value="email", required = true, defaultValue = "") String email,
+														@RequestParam(value="email", required = false, defaultValue = "") String email,
 														@RequestParam(value="role", required = true, defaultValue = "") String role,
-														@RequestParam(value="page", required = true, defaultValue = "1") int page, Model model){
+														@RequestParam(value="page", required = false, defaultValue = "1") int page, Model model){
 		Map<String, Object> map = commonService.visitedRecordList(hospital, email, role, page);
 		model.addAttribute("map", map);
 		return ResponseEntity.status(HttpStatus.OK).body(JsonResult.success(model));
