@@ -50,7 +50,7 @@ public class NurseService {
 		String phoneNumber = (String) param.get("phoneNumber");
 		int gender =  Integer.parseInt(String.valueOf(param.get("gender")));
 		int hasInsurance = Integer.parseInt(String.valueOf(param.get("hasInsurance")));
-		String regDate = (String) param.get("regDate");
+		//String regDate = (String) param.get("regDate");
 		
 		Long hospitalNo = Long.parseLong((String)param.get("hospitalNo"));
 
@@ -66,14 +66,14 @@ public class NurseService {
 		patientVo.setPhoneNumber(phoneNumber);
 		patientVo.setGender((int)1);
 		patientVo.setHasInsurance((int)1);
-		patientVo.setRegDate(regDate);
+		//patientVo.setRegDate(regDate);
 		patientVo.setHospitalNo(hospitalNo);
 
 		nurseRepository.insertPatient(patientVo);
 		Long patientNo = patientVo.getNo();
 		
 		appointmentVo.setStatus(status);
-		appointmentVo.setDate(regDate);
+		//appointmentVo.setDate(regDate);
 		appointmentVo.setRemarks(remarks);
 		appointmentVo.setPatientNo(patientNo);
 		appointmentVo.setEmployeeNo(employeeNo);

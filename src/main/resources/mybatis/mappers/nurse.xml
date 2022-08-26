@@ -19,7 +19,7 @@
 	<insert id="insertPatient"   parameterType="patientVo">
 		<![CDATA[
 			insert into patient(name, rrn, address, phone_number, gender, has_insurance, reg_date, hospital_no) 
-			values (#{name},#{rrn}, #{address}, #{phoneNumber}, #{gender}, #{hasInsurance}, #{regDate}, #{hospitalNo});
+			values (#{name},#{rrn}, #{address}, #{phoneNumber}, #{gender}, #{hasInsurance}, NOW(), #{hospitalNo});
 		]]>
 		<selectKey keyProperty="no" resultType="long" order="AFTER">
 			<![CDATA[
@@ -29,7 +29,18 @@
 	</insert>
 	<select id="findAllAppointments" resultType="appointmentVo">
 		<![CDATA[
-			SELECT * FROM appointment; 
+			SELECT 
+				a.no as appointmentNo,
+				a.date as appointmentDate,
+			    b.name as patientName,
+			    b.rrn as patientAge,
+			    b.gender as patientGender,
+			    a.remarks as appointmentRemarks,
+			    a.status as appointmentStatus,
+			    c.name as doctorName
+			FROM appointment a
+			LEFT JOIN patient b on a.patient_no = b.no
+			LEFT JOIN employee c on a.employee_no = c.no
 		]]>
 	</select>
 	<select id="findAppointmentByPatientNo" resultType="nurseVo">
@@ -52,7 +63,22 @@
 	</select>
 	<select id="findAppointmentByDate" resultType="appointmentVo">
 	<![CDATA[
-			SELECT * FROM appointment WHERE DATE(date) = #{date};
+			SELECT 
+				a.no as no,
+				a.status as status,
+				a.date as date,
+				a.remarks as remarks,
+				a.hospital_no as hospitalNo,
+				b.no as patientNo,
+			    b.name as patientName,
+			    b.rrn as patientAge,
+			    b.gender as patientGender,
+			    c.no as employeeNo,
+			    c.name as doctorName
+			FROM appointment a
+			LEFT JOIN patient b on a.patient_no = b.no
+			LEFT JOIN employee c on a.employee_no = c.no
+			WHERE DATE(date) = #{date};
 			
 		]]>
 	</select>
@@ -79,7 +105,7 @@
 		
 		<![CDATA[
 			insert into appointment(status, date, remarks, patient_no, employee_no, hospital_no) 
-			values (#{status},#{date}, #{remarks}, #{patientNo}, #{employeeNo}, #{hospitalNo});
+			values (#{status}, NOW(), #{remarks}, #{patientNo}, #{employeeNo}, #{hospitalNo});
 		]]>
 		
 	</insert>
