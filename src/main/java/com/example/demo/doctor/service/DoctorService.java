@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.ibatis.ognl.ASTBitNegate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,11 +12,8 @@ import com.example.demo.doctor.repository.DoctorRepository;
 import com.example.demo.vo.AppointmentVo;
 import com.example.demo.vo.DiagnosisVo;
 import com.example.demo.vo.DiseaseDataVo;
-import com.example.demo.vo.DiseaseVo;
 import com.example.demo.vo.DoctorVo;
 import com.example.demo.vo.MedicineDataVo;
-import com.example.demo.vo.PrescriptionVo;
-import com.example.demo.vo.TreatmentVo;
 
 @Service
 public class DoctorService {
@@ -31,49 +27,48 @@ public class DoctorService {
 		return doctorRepository.getTreatList(no);
 	}
 	
+	public Object getTreatCount(Long no) {
+		return doctorRepository.getTreatCount(no);
+	}
+	
+	
+	@SuppressWarnings("unchecked")
 	@Transactional
-	public Boolean doctorSuccess(DoctorVo doctorVo) {
+	public Boolean doctorSuccess(HashMap<String, Object> param) {
 		Boolean status = false;
+				
+		Map<String, Object> diagnosisMap = (Map<String, Object>)param.get("diagnosis");
 		// 진단서입력
-		DiagnosisVo diagnosisVo = new DiagnosisVo();
-		diagnosisVo.setAppointmentNo(doctorVo.getAppointmentNo());
-		diagnosisVo.setOpinion(doctorVo.getDiagnosisOpinion());
-		diagnosisVo.setPatientNo(doctorVo.getPatientNo());
+		// 진단서 번호를 받아와야해서 vo 사용
+		DiagnosisVo diagnosisVo = new DiagnosisVo();		
+		diagnosisVo.setAppointmentNo(Long.parseLong(diagnosisMap.get("appointmentNo").toString()));
+		diagnosisVo.setOpinion(diagnosisMap.get("opinion").toString());
+		diagnosisVo.setPatientNo(Long.parseLong(diagnosisMap.get("patientNo").toString())); 
 		doctorRepository.doctorSuccess(diagnosisVo); //diagnosis;
 		
-		// 처방전입력
-		PrescriptionVo prescriptionVo = new PrescriptionVo(); 
-		prescriptionVo.setDiagnosisNo(diagnosisVo.getNo());
-		prescriptionVo.setMedicineName(doctorVo.getPrescriptionName());
-		prescriptionVo.setDose(doctorVo.getPrescriptionDose());
-		prescriptionVo.setRemark(doctorVo.getPrescriptionRemark());
-		prescriptionVo.setDosingDays(doctorVo.getPrescriptionDays());
-		prescriptionVo.setDosingPrequency(doctorVo.getPrescriptionPrequency());
-		doctorRepository.insertPrescription(prescriptionVo);
+		// System.out.println(param);
+		Long diagnosisNo = diagnosisVo.getNo();
 		
-		// 질병입력
-		DiseaseVo diseaseVo = new DiseaseVo();
-		diseaseVo.setDiseaseName(doctorVo.getDiseaseName());
-		diseaseVo.setDiagnosisNo(diagnosisVo.getNo());
-		doctorRepository.insertDisease(diseaseVo);
+		List<Object> diseasesList = (List<Object>)param.get("disease");
+		doctorRepository.insertDisease(diseasesList, diagnosisNo);
 		
-		// 치료입력(없을수도있음)
-		TreatmentVo treatmentVo = new TreatmentVo();
-		treatmentVo.setMedicineName(doctorVo.getTreatmentName());
-		treatmentVo.setTreat(doctorVo.getTreat());
-		treatmentVo.setDose(doctorVo.getTreatDose());
-		treatmentVo.setDiagnosisNo(diagnosisVo.getNo());
-		doctorRepository.insertTreatment(treatmentVo);
+		List<Object> treatmentList = (List<Object>)param.get("treatment");
+		doctorRepository.insertTreatment(treatmentList, diagnosisNo);
 		
+		List<Object> prescriptionList = (List<Object>)param.get("prescription");		
+		doctorRepository.insertPrescription(prescriptionList, diagnosisNo);
+
 		// 예약 update
 		AppointmentVo appointmentVo = new AppointmentVo();
-		appointmentVo.setNo(doctorVo.getAppointmentNo());
+		appointmentVo.setNo(Long.parseLong(diagnosisMap.get("appointmentNo").toString()));
 		appointmentVo.setStatus(4);
 		status =doctorRepository.updateAppointment(appointmentVo);
 		
 		return status;
 	}
-
+	
+	 
+	
 	
 	public Map<String, Object> getModalPrescription(String name, int currentPage) {
 		
@@ -119,5 +114,5 @@ public class DoctorService {
 		map.put("totalCount", totalCount);
 		return map;
 	}
-	
+
 }
