@@ -5,12 +5,12 @@
 		<choose>
 			<when test="keyword == null or keyword == ''">
 		<![CDATA[
-		  select no, name, email, gender, address, phone_number, role, license_number from employee where hospital_no = #{hospitalNo} order by no desc
+		  select no, name, email, gender, address, phone_number, role, license_number from employee where hospital_no = #{hospitalNo} and not name in("관리자") order by no desc
 		]]>
 			</when>
 			<otherwise>
 		<![CDATA[
-		  select no, name, email, gender, address, phone_number, role, license_number from employee where where hospital_no = #{hospitalNo} and name like '%${keyword}%' order by no desc
+		  select no, name, email, gender, address, phone_number, role, license_number from employee where where hospital_no = #{hospitalNo} and name like '%${keyword}%' and not name in("관리자") order by no desc
 		]]>
 			</otherwise>
 		</choose>
@@ -37,7 +37,7 @@
 
 	<update id="updateEmployee" parameterType="employeevo">
 		<![CDATA[
-			update employee set name = #{name}, rrn = #{rrn} email = #{email}, password = #{password}, gender = #{gender}, address = #{address}, phone_number = #{phoneNumber}, role = #{role}, license_number = #{licenseNumber}  where no = #{no};
+			update employee set name = #{name}, rrn = #{rrn}, email = #{email}, password = #{password}, gender = #{gender}, address = #{address}, phone_number = #{phoneNumber}, role = #{role}, license_number = #{licenseNumber} where no = #{no};
 		]]>
 	</update>
 </mapper>

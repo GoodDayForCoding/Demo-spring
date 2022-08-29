@@ -56,6 +56,7 @@ public class HospitalAdminController {
 
 	@PutMapping("/{no}")
 	public ResponseEntity<JsonResult> update(@PathVariable("no") Long no, @RequestBody EmployeeVo employeeVo) {
+		employeeVo.setPassword(bCryptPasswordEncoder.encode(employeeVo.getPassword()));
 		Boolean result = hospitalAdminService.employeeUpdate(employeeVo);
 		return ResponseEntity.status(HttpStatus.OK).body(JsonResult.success(result ? no : null));
 	}
