@@ -20,6 +20,8 @@ public class CommonService {
 		
 		return commonRepository.selectAttendanceScheduleList();
 	}
+	
+	
 
 	public AttendanceScheduleVo findAttendanceScheduleByNo(Long no) {
 		
@@ -85,7 +87,7 @@ public class CommonService {
 		
 		return map;
 	}
-	
+
 
 	/*************** 진료 내역 end ******************/
 }

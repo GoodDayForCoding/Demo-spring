@@ -97,6 +97,7 @@ public class CommonRepository {
 			
 			return sqlSession.selectList("common.findPatientDetail", map);
 		}
+
 		
 		/*************** 진료 내역 end ******************/
 		
