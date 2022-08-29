@@ -1,6 +1,7 @@
 package com.example.demo.admin.repository;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +15,8 @@ public class HospitalAdminRepository {
 	@Autowired
 	private SqlSession sqlSession;
 
-	public List<EmployeeVo> findAll(String keyword) {
-		return sqlSession.selectList("hospitalAdmin.findAll", keyword);
+	public List<EmployeeVo> findAll(Map<String, Object> map) {
+		return sqlSession.selectList("hospitalAdmin.findAll", map);
 	}
 
 	public EmployeeVo findByNo(Long no) {

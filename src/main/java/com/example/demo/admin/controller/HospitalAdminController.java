@@ -30,9 +30,10 @@ public class HospitalAdminController {
 
 	@GetMapping("")
 	public ResponseEntity<JsonResult> index(
-			@RequestParam(value = "kw", required = true, defaultValue = "") String keyword) {
+			@RequestParam(value = "kw", required = true, defaultValue = "") String keyword,
+			@RequestParam(value = "hn", required = true, defaultValue = "") Long hospitalNo) {
 		return ResponseEntity.status(HttpStatus.OK)
-				.body(JsonResult.success(hospitalAdminService.getEmployeeList(keyword)));
+				.body(JsonResult.success(hospitalAdminService.getEmployeeList(keyword, hospitalNo)));
 	}
 
 	@GetMapping("/{no}")

@@ -1,6 +1,8 @@
 package com.example.demo.admin.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,8 +16,11 @@ public class HospitalAdminService {
 	@Autowired
 	private HospitalAdminRepository hospitalAdminRepository;
 
-	public List<EmployeeVo> getEmployeeList(String keyword) {
-		return hospitalAdminRepository.findAll(keyword);
+	public List<EmployeeVo> getEmployeeList(String keyword, Long hospitalNo) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("keyword", keyword);
+		map.put("hospitalNo", hospitalNo);
+		return hospitalAdminRepository.findAll(map);
 	}
 
 	public EmployeeVo getEmployeeOne(Long no) {

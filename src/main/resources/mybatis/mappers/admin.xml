@@ -36,7 +36,7 @@
 	</insert>
 	<insert id="insertHospitalAdmin" parameterType="employeevo">
 		<![CDATA[
-			insert into employee values(null, #{name}, "000000-0000000", #{email}, #{password}, 0, #{address}, #{phoneNumber}, "관리자", "0", now(), #{hospitalNo})
+			insert into employee values(null, #{name}, "000000-0000000", #{email}, #{password}, 1, #{address}, #{phoneNumber}, "ROLE_ADMIN", "0", now(), #{hospitalNo})
 		]]>
 	</insert>
 

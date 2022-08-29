@@ -34,7 +34,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		this.authenticationManager = authenticationManager;
 		setFilterProcessesUrl(url);
 	}
-	
+
 	// /login 요청을 하면 로그인 시도를 위해서 실행되는 함수
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
@@ -89,7 +89,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 				.withExpiresAt(new Date(System.currentTimeMillis() + (60000 * 60) * 8)) // 토큰 만료기간 8시간
 				.withClaim("email", principalDetails.getEmployeeVo().getEmail()) // 원하는 값을 토큰에 넣을 수 있다
 				.withClaim("role", principalDetails.getEmployeeVo().getRole())
-				.sign(Algorithm.HMAC512("cos"));
+				.withClaim("hospitalNo", principalDetails.getEmployeeVo().getHospitalNo())
+				.withClaim("no", principalDetails.getEmployeeVo().getNo()).sign(Algorithm.HMAC512("cos"));
 
 		response.addHeader("Authorization", "Bearer " + jwtToken);
 	}
