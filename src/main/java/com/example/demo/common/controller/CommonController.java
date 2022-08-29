@@ -27,9 +27,18 @@ public class CommonController {
 	@Autowired
 	private CommonService commonService;
 	
+//	@GetMapping("/attendanceSchedule")
+//	public ResponseEntity<JsonResult> atttendanceScheduleList() {
+//		return ResponseEntity.status(HttpStatus.OK).body(JsonResult.success(commonService.findAttendanceScheduleList()));
+//	}
+	
 	@GetMapping("/attendanceSchedule")
-	public ResponseEntity<JsonResult> atttendanceScheduleList() {
-		return ResponseEntity.status(HttpStatus.OK).body(JsonResult.success(commonService.findAttendanceScheduleList()));
+	public ResponseEntity<JsonResult> atttendanceScheduleList(
+			@RequestParam(value="hospital", required = true, defaultValue = "1") int hospital,
+			@RequestParam(value="startDate", required = true, defaultValue = "1") String startDate,
+			@RequestParam(value="endDate", required = true, defaultValue = "1") String endDate
+			) {		
+		return ResponseEntity.status(HttpStatus.OK).body(JsonResult.success(commonService.findAttendanceScheduleList(hospital, startDate, endDate)));
 	}
 	
 	@GetMapping("/attendanceScheduleByNo/{no}")
@@ -55,10 +64,10 @@ public class CommonController {
 	/*************** 진료 내역 start ******************/
 	@GetMapping("/menuList")
 	public ResponseEntity<JsonResult> visitedRecordList(@RequestParam(value="hospital", required = true, defaultValue = "1") int hospital,
-														@RequestParam(value="email", required = false, defaultValue = "") String email,
+														@RequestParam(value="no", required = false, defaultValue = "") long no,
 														@RequestParam(value="role", required = true, defaultValue = "") String role,
 														@RequestParam(value="page", required = false, defaultValue = "1") int page, Model model){
-		Map<String, Object> map = commonService.visitedRecordList(hospital, email, role, page);
+		Map<String, Object> map = commonService.visitedRecordList(hospital, no, role, page);
 		model.addAttribute("map", map);
 		return ResponseEntity.status(HttpStatus.OK).body(JsonResult.success(model));
 	}

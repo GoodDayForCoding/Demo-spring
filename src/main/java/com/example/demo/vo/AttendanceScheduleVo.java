@@ -17,4 +17,5 @@ public class AttendanceScheduleVo {
 	private int isConfirmed;
 	private Long hospitalNo;
 	private Long employeeNo;
+	private String employeeName;
 }

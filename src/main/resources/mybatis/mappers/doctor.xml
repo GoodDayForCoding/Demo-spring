@@ -57,7 +57,7 @@
 		
 	<insert id="insertTreatment" parameterType="map">
 		<![CDATA[
-			insert into treatment(	medicine_name, treat, dose, diagnosis_no) 
+			insert into treatment(medicine_name, treat, dose, diagnosis_no) 
 			values (#{medicineName}, #{usage}, #{fullDose}, #{diagnosisNo});	
 		]]>
 	</insert>

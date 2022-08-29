@@ -16,9 +16,8 @@ public class CommonService {
 	@Autowired
 	private CommonRepository commonRepository;
 	
-	public List<AttendanceScheduleVo> findAttendanceScheduleList() {
-		
-		return commonRepository.selectAttendanceScheduleList();
+	public List<AttendanceScheduleVo> findAttendanceScheduleList(int hospital, String sdate, String endDate) {		
+		return commonRepository.selectAttendanceScheduleList(hospital, sdate, endDate);
 	}
 	
 	
@@ -45,12 +44,12 @@ public class CommonService {
 
 	
 	/*************** 진료 내역 start ******************/
-	public Map<String, Object> visitedRecordList(int hospital, String name, String role, int currentPage) {
+	public Map<String, Object> visitedRecordList(int hospital, long no, String role, int currentPage) {
 		
-		int totalCount = commonRepository.visitedRecordList(hospital, name, role);
+		int totalCount = commonRepository.visitedRecordList(hospital, no, role);
 		int page = (currentPage - 1) * 10;
 		
-		List<Map<String, Object>> list = commonRepository.visitedRecordList(hospital, name, page, role);;
+		List<Map<String, Object>> list = commonRepository.visitedRecordList(hospital, no, page, role);;
 				
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("totalCount", totalCount);
