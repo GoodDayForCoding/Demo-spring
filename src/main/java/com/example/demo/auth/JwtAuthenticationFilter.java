@@ -30,6 +30,11 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
 	private final AuthenticationManager authenticationManager;
 
+	public JwtAuthenticationFilter(AuthenticationManager authenticationManager, String url) {
+		this.authenticationManager = authenticationManager;
+		setFilterProcessesUrl(url);
+	}
+	
 	// /login 요청을 하면 로그인 시도를 위해서 실행되는 함수
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
@@ -80,12 +85,17 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
 		// RSA X, Hash암호방식
 		// 프로퍼티로 암호화 시키기
-		String jwtToken = JWT.create().withSubject("cos토큰")
+		String jwtToken = JWT.create().withSubject("sub")
 				.withExpiresAt(new Date(System.currentTimeMillis() + (60000 * 60) * 8)) // 토큰 만료기간 8시간
-				.withClaim("name", principalDetails.getEmployeeVo().getName())
 				.withClaim("email", principalDetails.getEmployeeVo().getEmail()) // 원하는 값을 토큰에 넣을 수 있다
+				.withClaim("role", principalDetails.getEmployeeVo().getRole())
 				.sign(Algorithm.HMAC512("cos"));
 
 		response.addHeader("Authorization", "Bearer " + jwtToken);
+	}
+
+	@Override
+	public void setFilterProcessesUrl(String filterProcessesUrl) {
+		super.setFilterProcessesUrl(filterProcessesUrl);
 	}
 }
