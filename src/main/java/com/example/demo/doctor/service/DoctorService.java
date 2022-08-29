@@ -48,15 +48,22 @@ public class DoctorService {
 		
 		// System.out.println(param);
 		Long diagnosisNo = diagnosisVo.getNo();
+				
 		
 		List<Object> diseasesList = (List<Object>)param.get("disease");
-		doctorRepository.insertDisease(diseasesList, diagnosisNo);
+		if(diseasesList != null) {
+			doctorRepository.insertDisease(diseasesList, diagnosisNo);
+		}	
 		
 		List<Object> treatmentList = (List<Object>)param.get("treatment");
-		doctorRepository.insertTreatment(treatmentList, diagnosisNo);
+		if(treatmentList != null) {
+			doctorRepository.insertTreatment(treatmentList, diagnosisNo);			
+		}
 		
 		List<Object> prescriptionList = (List<Object>)param.get("prescription");		
-		doctorRepository.insertPrescription(prescriptionList, diagnosisNo);
+		if(prescriptionList != null) {
+			doctorRepository.insertPrescription(prescriptionList, diagnosisNo);			
+		}
 
 		// 예약 update
 		AppointmentVo appointmentVo = new AppointmentVo();

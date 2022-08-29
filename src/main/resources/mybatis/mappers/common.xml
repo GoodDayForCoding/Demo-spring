@@ -1,25 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="common">
-
-	<select id="findAllAttendanceSchedule" resultType="attendanceScheduleVo">
-		<![CDATA[
-			select * from attendance_schedule;
-		]]>
-	</select>
-	
-	<select id="findAttendanceSchedule" parameterType="map" resultType="attendanceScheduleVo">
+<mapper namespace="common">	
+	<select id="findAllAttendanceSchedule" parameterType="map" resultType="attendanceScheduleVo">
 	<![CDATA[
 		select 
-			no as No,
-			startDate as startDate,
-			startDate as endDate,
-			status,
-			remark,
-			is_confirmed as isConfirmed,
-			hospital_no as hospitalNo,
-			employee_no as employeeNo
-		from attendance_schedule
+			a.no as No,
+			a.start_date as startDate,
+			a.end_date as endDate,
+			a.status,
+			a.remark,
+			a.employee_no as employeeNo,
+            b.name as employeeName
+		from attendance_schedule a
+		left join employee b on a.employee_no = b.no
+		where a.hospital_no = #{hospital}
+		and start_date between #{start_date} and #{end_date};
+		
 	]]>
 	</select>
 	
@@ -58,7 +54,7 @@
 	<!-- 진료 내역 start -->
 	<select id="findPatientByDoctor" parameterType="map" resultType="map">
 		<choose>
-			<when test='role == "DOCTOR"'>
+			<when test='role == "ROLE_DOCTOR"'>
 				<![CDATA[
 					select 
 						a.no as appointmentNo,
@@ -75,9 +71,9 @@
 					where a.hospital_no = #{hospital} 
 						and a.status between 2 and 3
 						and c.role = #{role}
-						and c.email = #{email}
+						and a.employee_no = #{no}
 						and date_format(a.date, '%Y-%m-%d' ) = date_format(now(), '%Y-%m-%d')
-					order by a.status, a.date desc
+					order by a.status, a.date asc
 					limit #{page}, 10
 				]]>
 			</when>
@@ -98,7 +94,7 @@
 					where a.hospital_no = #{hospital} 
 						and a.status between 2 and 3 
 						and date_format(a.date, '%Y-%m-%d' ) = date_format(now(), '%Y-%m-%d')
-					order by a.status, a.date desc	
+					order by a.status, a.date asc
 					limit #{page}, 10
 				]]>
 			</otherwise>
@@ -108,14 +104,14 @@
 	
 	<select id="findRecordCount" parameterType="map" resultType="int">
 		<choose>
-			<when test='role == "DOCTOR"'>
+			<when test='role == "ROLE_DOCTOR"'>
 				<![CDATA[
 					select count(*)
 					from appointment a 
 						left join employee c on a.employee_no = c.no
 					where a.hospital_no = #{hospital} 
 						and a.status between 2 and 3
-						and c.email = #{email}
+						and a.employee_no = #{no}
 						and date_format(a.date, '%Y-%m-%d' ) = date_format(now(), '%Y-%m-%d')
 				]]>
 			</when>	

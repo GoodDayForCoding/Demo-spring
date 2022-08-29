@@ -17,9 +17,12 @@ public class CommonRepository {
 		@Autowired
 		private SqlSession sqlSession;
 		
-		public List<AttendanceScheduleVo> selectAttendanceScheduleList() {
-				
-			return sqlSession.selectList("common.findAllAttendanceSchedule");
+		public List<AttendanceScheduleVo> selectAttendanceScheduleList(int hospital, String sdate, String endDate) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("hospital", hospital);
+			map.put("sdate", sdate);
+			map.put("edate", endDate);
+			return sqlSession.selectList("common.findAllAttendanceSchedule", map);
 		}
 
 		public AttendanceScheduleVo selectAttendanceScheduleByNo() {
@@ -44,20 +47,20 @@ public class CommonRepository {
 
 		
 		/*************** 진료 내역 start ******************/
-		public List<Map<String, Object>> visitedRecordList(int hospital, String email, int page, String role) {
+		public List<Map<String, Object>> visitedRecordList(int hospital, long no, int page, String role) {
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("hospital", hospital);
-			map.put("email", email);
+			map.put("no", no);
 			map.put("page", page);
 			map.put("role", role);
 			return sqlSession.selectList("common.findPatientByDoctor", map);
 		}
 
 
-		public int visitedRecordList(int hospital, String name, String role) {
+		public int visitedRecordList(int hospital, long no, String role) {
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("hospital", hospital);
-			map.put("email", name);
+			map.put("no", no);
 			map.put("role", role);
 			
 			return sqlSession.selectOne("common.findRecordCount", map);

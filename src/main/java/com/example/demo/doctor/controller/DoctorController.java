@@ -1,7 +1,6 @@
 package com.example.demo.doctor.controller;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.doctor.service.DoctorService;
 import com.example.demo.dto.JsonResult;
-import com.example.demo.vo.DoctorVo;
 
 @RestController
 @RequestMapping("/api/doctor")
@@ -43,6 +41,7 @@ public class DoctorController {
 	
 	@PostMapping("")
 	public ResponseEntity<JsonResult> success(@RequestBody HashMap<String, Object> param){
+		System.out.println(param);
 		Boolean result = doctorService.doctorSuccess(param);		
 		return ResponseEntity.status(HttpStatus.OK).body(JsonResult.success(result));		
 	}
