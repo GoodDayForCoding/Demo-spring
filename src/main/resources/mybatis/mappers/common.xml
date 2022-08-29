@@ -7,6 +7,22 @@
 			select * from attendance_schedule;
 		]]>
 	</select>
+	
+	<select id="findAttendanceSchedule" parameterType="map" resultType="attendanceScheduleVo">
+	<![CDATA[
+		select 
+			no as No,
+			startDate as startDate,
+			startDate as endDate,
+			status,
+			remark,
+			is_confirmed as isConfirmed,
+			hospital_no as hospitalNo,
+			employee_no as employeeNo
+		from attendance_schedule
+	]]>
+	</select>
+	
 	<select id="findAllAttendanceScheduleByNo" resultType="attendanceScheduleVo">
 		<![CDATA[
 			select * from attendance_schedule where no = #{no};
@@ -157,24 +173,26 @@
 	<select id="findPatientDetail" parameterType="map" resultType="map">
 		<![CDATA[
 			select 
-				a.no as appointmentNo,
-				date_format(a.date, '%Y-%m-%d') as appointmentDate,
-				c.name as employeeName,
-				b.name as patientName,
-				(select concat( CASE WHEN substr(rrn, 8, 1) = '1' || substr(rrn, 8, 1) = '2' THEN '19'
-								ELSE '20' END, substr(rrn, 1, 2), '-', substr(rrn, 3, 2), '-', substr(rrn, 5, 2) ) as birth
-				 From patient 
-				 where no = #{no} or name like concat('%', #{name}, '%')) as birth,
-				a.patient_no as patientNo,
-				a.employee_no as employeeNo,
-				a.remarks as diagnosisOpinion
-			from appointment a
-				left join patient b on a.patient_no = b.no
-				left join employee c on a.employee_no = c.no
-			where a.hospital_no = #{hospital}
-			and a.patient_no = #{no}
-			or b.name like concat('%', #{name}, '%')
-			limit #{page}, 10; 		
+				a.no as diagnosisNo,
+			    date_format(c.date, '%Y-%m-%d') as appointmentDate,
+			    a.opinion as diagnosisOpinion,
+			    a.patient_no as patientNo,
+			    b.name as patientName,
+							(select concat( CASE WHEN substr(rrn, 8, 1) = '1' || substr(rrn, 8, 1) = '2' THEN '19'
+											ELSE '20' END, substr(rrn, 1, 2), '-', substr(rrn, 3, 2), '-', substr(rrn, 5, 2) ) as birth
+							 From patient 
+							 where no = #{no} or name like concat('%', #{name}, '%')) as birth,
+				e.disease_name as diseaseName,
+			    d.name as employeeName,
+			    d.no as employeeNo
+			from diagnosis a
+			left join patient b on a.patient_no = b.no
+			left join appointment c on a.appointment_no = c.no
+			left join employee d on c.employee_no = d.no
+			left join disease e on a.no = e.diagnosis_no
+			where c.hospital_no = #{hospital}
+			and a.patient_no = #{no} or b.name like concat('%' , #{name}, '%')
+			limit #{page}, 10;		
 		]]>
 	</select>
 	
