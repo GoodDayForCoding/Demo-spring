@@ -17,7 +17,7 @@ public class CommonRepository {
 		@Autowired
 		private SqlSession sqlSession;
 		
-		public List<AttendanceScheduleVo> selectAttendanceScheduleList(int hospital, String sdate, String endDate) {
+		public List<Map<String, Object>> selectAttendanceScheduleList(int hospital, String sdate, String endDate) {
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("hospital", hospital);
 			map.put("sdate", sdate);
@@ -26,7 +26,6 @@ public class CommonRepository {
 		}
 
 		public AttendanceScheduleVo selectAttendanceScheduleByNo() {
-			
 			return sqlSession.selectOne("common.findAttendanceScheduleByNo");
 		}
 

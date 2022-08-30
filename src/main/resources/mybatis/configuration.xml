@@ -30,7 +30,7 @@
 			alias="patientvo" />
 		<typeAlias type="com.example.demo.vo.NurseVo"
 			alias="nursevo"/>
-			<typeAlias type="com.example.demo.vo.AttendanceScheduleVo"
+		<typeAlias type="com.example.demo.vo.AttendanceScheduleVo"
 			alias="attendanceschedulevo"/>
 	</typeAliases>
 

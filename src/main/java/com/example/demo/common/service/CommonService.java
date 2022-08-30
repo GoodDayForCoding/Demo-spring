@@ -16,7 +16,7 @@ public class CommonService {
 	@Autowired
 	private CommonRepository commonRepository;
 	
-	public List<AttendanceScheduleVo> findAttendanceScheduleList(int hospital, String sdate, String endDate) {		
+	public List<Map<String, Object>> findAttendanceScheduleList(int hospital, String sdate, String endDate) {		
 		return commonRepository.selectAttendanceScheduleList(hospital, sdate, endDate);
 	}
 	
