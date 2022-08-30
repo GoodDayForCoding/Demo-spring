@@ -1,33 +1,31 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="common">	
-	<select id="findAllAttendanceSchedule" parameterType="map" resultType="attendanceScheduleVo">
-	<![CDATA[
-		select 
-			a.no as No,
-			a.start_date as startDate,
-			a.end_date as endDate,
-			a.status,
-			a.remark,
-			a.employee_no as employeeNo,
-            b.name as employeeName
-		from attendance_schedule a
-		left join employee b on a.employee_no = b.no
-		where a.hospital_no = #{hospital}
-		and start_date between #{start_date} and #{end_date};
-		
-	]]>
+	<select id="findAllAttendanceSchedule" parameterType="map" resultType="map">
+		<![CDATA[
+			select 
+				date_format(a.start_date, '%Y-%m-%d') as start,
+				date_format(a.end_date, '%Y-%m-%d') as end,
+				concat(b.name, a.status) as title
+			from attendance_schedule a
+			left join employee b on a.employee_no = b.no
+			where a.hospital_no = #{hospital}
+			and start_date between #{sdate} and #{edate}
+			
+		]]>
 	</select>
 	
-	<select id="findAllAttendanceScheduleByNo" resultType="attendanceScheduleVo">
+	<select id="findAllAttendanceScheduleByNo" resultType="attendanceschedulevo">
 		<![CDATA[
 			select * from attendance_schedule where no = #{no};
 		]]>
 	</select>
-	<insert id="insertAttendanceSchedule" parameterType="attendanceScheduleVo">
+	<insert id="insertAttendanceSchedule" parameterType="attendanceschedulevo">
 		<![CDATA[
-			insert into attendance_schedule(no, start_date, end_date, status, remark, is_confirmed, hospital_no, employee_no, employee_no1, hospital_no1) 
-			values (#{no},#{startDate}, #{endDate}, #{status}, #{remark}, #{is_confirmed}, #{hospital_no}, #{employee_no}, #{employee_no1}, #{hospital_no1});
+			insert into attendance_schedule
+			(start_date, end_date, status, remark, is_confirmed, hospital_no, employee_no) 
+			values 
+			(#{startDate}, #{endDate}, #{status}, #{remark}, #{isConfirmed}, #{hospitalNo}, #{employeeNo});
 		]]>
 		<selectKey keyProperty="no" resultType="long" order="AFTER">
 			<![CDATA[

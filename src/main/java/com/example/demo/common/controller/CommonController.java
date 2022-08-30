@@ -48,7 +48,7 @@ public class CommonController {
 	
 	@PostMapping("attendanceSchedule")
 	public ResponseEntity<JsonResult> attendanceScheduleAdd(@RequestBody AttendanceScheduleVo attendanceScheduleVo){
-		return ResponseEntity.status(HttpStatus.OK).body(JsonResult.success(attendanceScheduleVo));
+		return ResponseEntity.status(HttpStatus.OK).body(JsonResult.success(commonService.addAttendanceSchedule(attendanceScheduleVo)));
 	}
 	
 	@PutMapping("attendanceSchedule/{no}")
