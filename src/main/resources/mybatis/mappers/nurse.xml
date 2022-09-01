@@ -11,6 +11,11 @@
 			select * from patient where no = #{no};
 		]]>
 	</select>
+	<select id="findAllPatientByHospitalNo" resultType="patientVo">
+		<![CDATA[
+			select * from patient where hospital_no = #{no};
+		]]>
+	</select>
 	<select id="findPatientByName" resultType="patientVo">
 		<![CDATA[
 			select * from patient where name = #{name};
@@ -109,4 +114,10 @@
 		]]>
 		
 	</insert>
+	<update id="deleteAppointment" parameterType="long">
+		<![CDATA[
+			update appointment set status = 6 where no = #{no};
+		]]>
+	</update>
+
 </mapper>

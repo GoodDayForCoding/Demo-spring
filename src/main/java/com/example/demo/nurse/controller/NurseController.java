@@ -7,7 +7,9 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -35,6 +37,11 @@ public class NurseController {
 	@GetMapping("/patientByNo/{no}")
 	public ResponseEntity<JsonResult> patientDetails(@PathVariable("no") Long no) {
 		return ResponseEntity.status(HttpStatus.OK).body(JsonResult.success(nurseService.findPatientByNo(no)));
+	}
+	
+	@GetMapping("/patientByHospitalNo/{no}")
+	public ResponseEntity<JsonResult> patientListByHospitalNo(@PathVariable("no") Long no) {
+		return ResponseEntity.status(HttpStatus.OK).body(JsonResult.success(nurseService.findPatientListByHospitalNo(no)));
 	}
 	
 	@GetMapping("/patientByName/{name}")
@@ -79,6 +86,12 @@ public class NurseController {
 	@PutMapping("/appointment/{no}")
 	public ResponseEntity<JsonResult> appointmentModify(@PathVariable("no") Long no, @RequestBody AppointmentVo appointmentVo) {
 		Boolean result = nurseService.modifyApointment(appointmentVo);
+		return ResponseEntity.status(HttpStatus.OK).body(JsonResult.success(result ? no : null));
+	}
+	
+	@PatchMapping("/{no}")
+	public ResponseEntity<JsonResult> appointmentRemove(@PathVariable("no") Long no) {
+		Boolean result = nurseService.removeAppointment(no);
 		return ResponseEntity.status(HttpStatus.OK).body(JsonResult.success(result ? no : null));
 	}
 	
