@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -28,18 +29,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.addFilterBefore(new MyFilter(), BasicAuthenticationFilter.class);
+		// http.addFilterBefore(new MyFilter(), BasicAuthenticationFilter.class);
 		http.csrf().disable();
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // 세션을 사용하지 않겠다
 
 				.and().addFilter(corsFilter) // @CrossOrigin(인증 X), 시큐리티 필터에 등록 인증(O)
 				.formLogin().disable().httpBasic().disable()
 				.addFilter(new JwtAuthenticationFilter(authenticationManager(), "/api/login")) // authenticationManager
-				.addFilter(new JwtAuthorizationFilter(authenticationManager(), securityRepository)).authorizeRequests()
+				.addFilter(new JwtAuthorizationFilter(authenticationManager(), securityRepository))
+				.authorizeRequests()
 				.antMatchers("/api/**").authenticated()
 				// .antMatchers("/api/admin/**").access("hasRole('ROLE_ADMIN')")
 				.anyRequest().permitAll().and().exceptionHandling()
 				.authenticationEntryPoint(jwtAuthenticationEntryPoint);
+
 	}
 
 	@Bean
@@ -52,4 +55,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public BCryptPasswordEncoder encodePwd() {
 		return new BCryptPasswordEncoder();
 	}
+
 }
