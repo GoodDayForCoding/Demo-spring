@@ -82,4 +82,15 @@ public class NurseRepository {
 		return sqlSession.selectList("nurse.findAppointmentByDate", date);
 	}
 
+
+	public Boolean deleteAppointment(Long no) {
+		return sqlSession.update("nurse.deleteAppointment", no) == 1;
+	}
+
+
+	public List<PatientVo> selectPatientListByHospitalNo(Long no) {
+		
+		return sqlSession.selectList("nurse.findAllPatientByHospitalNo", no);
+	}
+
 }

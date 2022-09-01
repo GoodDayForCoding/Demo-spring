@@ -51,15 +51,15 @@ public class NurseService {
 		int gender =  Integer.parseInt(String.valueOf(param.get("gender")));
 		int hasInsurance = Integer.parseInt(String.valueOf(param.get("hasInsurance")));
 		//String regDate = (String) param.get("regDate");
-		
+
 		Long hospitalNo = Long.parseLong((String)param.get("hospitalNo"));
 
 		Long employeeNo =  ((Number)param.get("employeeNo")).longValue();
 
 		String remarks = (String) param.get("remarks");
-
-		int status =  (int) (param.get("status"));
 		
+		int status =  (int) (param.get("status"));
+		System.out.println("test");
 		patientVo.setName(name);
 		patientVo.setRrn(rrn);
 		patientVo.setAddress(address);
@@ -109,6 +109,16 @@ public class NurseService {
 	public List<AppointmentVo> findAppointmentByDate(String date) {
 
 		return nurseRepository.selectAppointmentByDate(date);
+	}
+
+	public Boolean removeAppointment(Long no) {
+		
+		return nurseRepository.deleteAppointment(no);
+	}
+
+	public List<PatientVo> findPatientListByHospitalNo(Long no) {
+		
+		return nurseRepository.selectPatientListByHospitalNo(no);
 	}
 
 	
