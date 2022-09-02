@@ -9,7 +9,7 @@ import lombok.ToString;
 @ToString
 public class AttendanceScheduleVo {
 
-	private Long No;
+	private Long no;
 	private String startDate;
 	private String endDate;
 	private String status;

@@ -6,20 +6,37 @@
 			select 
 				date_format(a.start_date, '%Y-%m-%d') as start,
 				date_format(a.end_date, '%Y-%m-%d') as end,
-				concat(b.name, a.status) as title
+				a.status as title,
+				a.remark,
+				b.name as name,
+				b.role as role
 			from attendance_schedule a
 			left join employee b on a.employee_no = b.no
 			where a.hospital_no = #{hospital}
 			and start_date between #{sdate} and #{edate}
-			
 		]]>
 	</select>
 	
-	<select id="findAllAttendanceScheduleByNo" resultType="attendanceschedulevo">
+	<select id="findAllAttendanceScheduleByNo" parameterType="map"  resultType="attendanceschedulevo">
 		<![CDATA[
-			select * from attendance_schedule where no = #{no};
+			select 
+				a.no,
+				date_format(a.start_date, '%Y-%m-%d') as startDate,
+				date_format(a.end_date, '%Y-%m-%d') as endDate,
+				b.name as employeeName,
+				a.remark,
+				a.is_confirmed as isConfirmed,
+				a.status     
+			from attendance_schedule a
+			left join employee b on a.employee_no = b.no
+			where a.hospital_no = #{no}
+			and date_format(a.start_date, '%Y-%m-%d') >= #{sdate}
+			or date_format(a.start_date, '%Y-%m-%d') >= #{sdate}
+			order by a.is_confirmed asc, a.start_date;
 		]]>
 	</select>
+	
+	
 	<insert id="insertAttendanceSchedule" parameterType="attendanceschedulevo">
 		<![CDATA[
 			insert into attendance_schedule
@@ -56,7 +73,7 @@
 				<![CDATA[
 					select 
 						a.no as appointmentNo,
-						date_format(a.date, '%h:%m:%s') as appointmentDate, 
+						date_format(a.date, '%h:%i:%s') as appointmentDate, 
 						a.remarks as appointmentRemark,
 						a.status,
 						b.no as patientNo, 
@@ -71,7 +88,7 @@
 						and c.role = #{role}
 						and a.employee_no = #{no}
 						and date_format(a.date, '%Y-%m-%d' ) = date_format(now(), '%Y-%m-%d')
-					order by a.status, a.date asc
+					order by a.status desc, a.date asc
 					limit #{page}, 10
 				]]>
 			</when>
@@ -79,7 +96,7 @@
 				<![CDATA[
 					select 
 						a.no as appointmentNo,	
-						date_format(a.date, '%h:%m:%s') as appointmentDate, 
+						date_format(a.date, '%h:%i:%s') as appointmentDate, 
 						a.remarks as appointmentRemark,
 						a.status, 
 						b.no as patientNo, 
@@ -92,7 +109,7 @@
 					where a.hospital_no = #{hospital} 
 						and a.status between 2 and 3 
 						and date_format(a.date, '%Y-%m-%d' ) = date_format(now(), '%Y-%m-%d')
-					order by a.status, a.date asc
+					order by a.status desc, a.date asc
 					limit #{page}, 10
 				]]>
 			</otherwise>
@@ -189,6 +206,24 @@
 			limit #{page}, 10;		
 		]]>
 	</select>
+	
+	<update id="updateRecordList" parameterType="appointmentvo">
+		<![CDATA[
+			update appointment set status = #{status} where no = #{no}
+		]]>
+	</update>
+	
+	<select id="getDoctorList" parameterType="long" resultType="employeevo">
+		<![CDATA[
+			select no, name from employee where hospital_no = #{no} and role='ROLE_DOCTOR'
+		]]>
+	</select>
+	
+	<update id="doctorupdate" parameterType="appointmentvo">
+		<![CDATA[
+			update appointment set employee_no = #{employeeNo} where no = #{no}
+		]]>
+	</update>
 	
 	<!-- 진료 내역 end -->
 </mapper>

@@ -8,7 +8,9 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.example.demo.vo.AppointmentVo;
 import com.example.demo.vo.AttendanceScheduleVo;
+import com.example.demo.vo.EmployeeVo;
 
 
 @Repository
@@ -25,8 +27,12 @@ public class CommonRepository {
 			return sqlSession.selectList("common.findAllAttendanceSchedule", map);
 		}
 
-		public AttendanceScheduleVo selectAttendanceScheduleByNo() {
-			return sqlSession.selectOne("common.findAttendanceScheduleByNo");
+
+		public List<AttendanceScheduleVo> selectAttendanceScheduleByNo(Long no, String sdate) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("no", no);
+			map.put("sdate", sdate);
+			return sqlSession.selectList("common.findAllAttendanceScheduleByNo", map);
 		}
 
 		public Boolean insertAttendanceSchedule(AttendanceScheduleVo attendanceScheduleVo) {
@@ -98,6 +104,18 @@ public class CommonRepository {
 			map.put("page", detailPage);
 			
 			return sqlSession.selectList("common.findPatientDetail", map);
+		}
+
+		public boolean updateRecordList(Long no, AppointmentVo appointmentVo) {						
+			return sqlSession.update("common.updateRecordList", appointmentVo) == 1;
+		}
+
+		public List<EmployeeVo> getDoctorList(Long no) {
+			return sqlSession.selectList("common.getDoctorList", no);
+		}
+
+		public boolean doctorupdate(AppointmentVo appointmentVo) {
+			return sqlSession.update("common.doctorupdate", appointmentVo) == 1;
 		}
 
 		
