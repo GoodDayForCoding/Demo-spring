@@ -89,6 +89,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 				.withClaim("email", principalDetails.getEmployeeVo().getEmail()) // 원하는 값을 토큰에 넣을 수 있다
 				.withClaim("role", principalDetails.getEmployeeVo().getRole())
 				.withClaim("hospitalNo", principalDetails.getEmployeeVo().getHospitalNo())
+				.withClaim("name", principalDetails.getEmployeeVo().getName())
 				.withClaim("no", principalDetails.getEmployeeVo().getNo()).sign(Algorithm.HMAC512("cos"));
 
 		response.addHeader("Authorization", "Bearer " + jwtToken);

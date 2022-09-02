@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.common.repository.CommonRepository;
+import com.example.demo.vo.AppointmentVo;
 import com.example.demo.vo.AttendanceScheduleVo;
+import com.example.demo.vo.EmployeeVo;
 
 @Service
 public class CommonService {
@@ -20,11 +22,8 @@ public class CommonService {
 		return commonRepository.selectAttendanceScheduleList(hospital, sdate, endDate);
 	}
 	
-	
-
-	public AttendanceScheduleVo findAttendanceScheduleByNo(Long no) {
-		
-		return commonRepository.selectAttendanceScheduleByNo();
+	public List<AttendanceScheduleVo> findAttendanceScheduleByNo(Long no, String sdate) {		
+		return commonRepository.selectAttendanceScheduleByNo(no, sdate);
 	}
 
 	public Boolean addAttendanceSchedule(AttendanceScheduleVo attendanceScheduleVo) {
@@ -85,6 +84,20 @@ public class CommonService {
 		map.put("data", list);
 		
 		return map;
+	}
+
+	// 예약부분 상태 업데이트
+	public boolean updateRecordList(Long no, AppointmentVo appointmentVo) {
+		return commonRepository.updateRecordList(no, appointmentVo);
+	}
+
+	// 의사 리스트 받아오기
+	public List<EmployeeVo> getDoctorList(Long no) {
+		return commonRepository.getDoctorList(no);
+	}
+
+	public boolean doctorupdate(AppointmentVo appointmentVo) {
+		return commonRepository.doctorupdate(appointmentVo);
 	}
 
 

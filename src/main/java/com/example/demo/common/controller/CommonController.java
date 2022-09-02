@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.common.service.CommonService;
 import com.example.demo.dto.JsonResult;
+import com.example.demo.vo.AppointmentVo;
 import com.example.demo.vo.AttendanceScheduleVo;
 
 @RestController
@@ -41,9 +42,11 @@ public class CommonController {
 		return ResponseEntity.status(HttpStatus.OK).body(JsonResult.success(commonService.findAttendanceScheduleList(hospital, startDate, endDate)));
 	}
 	
-	@GetMapping("/attendanceScheduleByNo/{no}")
-	public ResponseEntity<JsonResult> attendanceScheduleDetails(@PathVariable("no") Long no) {
-		return ResponseEntity.status(HttpStatus.OK).body(JsonResult.success(commonService.findAttendanceScheduleByNo(no)));
+	@GetMapping("/attendanceScheduleTable")
+	public ResponseEntity<JsonResult> attendanceScheduleDetails(@RequestParam(value="hospital", required = true, defaultValue = "1") Long no,
+																@RequestParam(value="startDate", required = true, defaultValue = "1") String sdate) {
+		System.out.println(no + "," + sdate);
+		return ResponseEntity.status(HttpStatus.OK).body(JsonResult.success(commonService.findAttendanceScheduleByNo(no, sdate)));
 	}
 	
 	@PostMapping("attendanceSchedule")
@@ -72,6 +75,11 @@ public class CommonController {
 		return ResponseEntity.status(HttpStatus.OK).body(JsonResult.success(model));
 	}
 	
+	@PutMapping("/menuList/{no}")
+	public ResponseEntity<JsonResult> updateRecordList(@PathVariable("no") Long no, @RequestBody AppointmentVo appointmentVo){
+		return ResponseEntity.status(HttpStatus.OK).body(JsonResult.success(commonService.updateRecordList(no, appointmentVo)));
+	}
+	
 	@GetMapping("/visitedRecord")
 	public ResponseEntity<JsonResult> visitedRecord(@RequestParam(value="hospital", required = true, defaultValue = "1") int hospital,													
 													@RequestParam(value="date", required = true, defaultValue = "") String date,
@@ -93,6 +101,16 @@ public class CommonController {
 		model.addAttribute("map", map);
 		
 		return ResponseEntity.status(HttpStatus.OK).body(JsonResult.success(model));
+	}
+	
+	@GetMapping("/doctorlist/{hno}")
+	public ResponseEntity<JsonResult> getDoctorList(@PathVariable("hno") Long no){
+		return ResponseEntity.status(HttpStatus.OK).body(JsonResult.success(commonService.getDoctorList(no)));
+	}
+	
+	@PutMapping("/doctorupdate/{no}")
+	public ResponseEntity<JsonResult> updateDoctor(@PathVariable("no") Long no, @RequestBody AppointmentVo appointmentVo){
+		return ResponseEntity.status(HttpStatus.OK).body(JsonResult.success(commonService.doctorupdate(appointmentVo)));
 	}
 	
 	/*************** 진료 내역 end ******************/
