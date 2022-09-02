@@ -1,6 +1,7 @@
 package com.example.demo.nurse.repository;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,6 +92,11 @@ public class NurseRepository {
 	public List<PatientVo> selectPatientListByHospitalNo(Long no) {
 		
 		return sqlSession.selectList("nurse.findAllPatientByHospitalNo", no);
+	}
+
+
+	public List<Map<String, Object>> selectPaymentByPatientNo(Long no) {
+		return sqlSession.selectList("nurse.findPaymentByPatientNo", no);
 	}
 
 }
