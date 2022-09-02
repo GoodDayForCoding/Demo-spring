@@ -95,4 +95,9 @@ public class NurseController {
 		return ResponseEntity.status(HttpStatus.OK).body(JsonResult.success(result ? no : null));
 	}
 	
+	@GetMapping("/payment/{no}")
+	public ResponseEntity<JsonResult> paymentDetail(@PathVariable("no") Long no) {
+	
+		return ResponseEntity.status(HttpStatus.OK).body(JsonResult.success(nurseService.findPaymentByPatientNo(no)));
+	}
 }

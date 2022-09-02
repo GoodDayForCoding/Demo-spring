@@ -121,5 +121,10 @@ public class NurseService {
 		return nurseRepository.selectPatientListByHospitalNo(no);
 	}
 
+	public List<Map<String, Object>> findPaymentByPatientNo(Long no) {
+		
+		return nurseRepository.selectPaymentByPatientNo(no);
+	}
+
 	
 }
