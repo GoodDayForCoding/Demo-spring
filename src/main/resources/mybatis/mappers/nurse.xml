@@ -141,7 +141,7 @@
 			LEFT JOIN diagnosis b on a.no = b.patient_no 
 			LEFT JOIN treatment c on b.no = c.diagnosis_no
 			LEFT JOIN prescription d on b.no = d.diagnosis_no
-			WHERE a.patient_no = (SELECT patient_no FROM appointment WHERE no = #{no}) and a.date < now();
+			WHERE a.patient_no = (SELECT patient_no FROM appointment WHERE no = #{no}) and a.date > now();
 		]]>
 	</select>
 

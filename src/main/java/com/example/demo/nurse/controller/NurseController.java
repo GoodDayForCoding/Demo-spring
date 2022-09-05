@@ -82,15 +82,16 @@ public class NurseController {
 		nurseService.addAppointment(appointmentVo);
 		return ResponseEntity.status(HttpStatus.OK).body(JsonResult.success(appointmentVo));
 	}
-	
+	/*
 	@PutMapping("/appointment/{no}")
 	public ResponseEntity<JsonResult> appointmentModify(@PathVariable("no") Long no, @RequestBody AppointmentVo appointmentVo) {
 		Boolean result = nurseService.modifyApointment(appointmentVo);
 		return ResponseEntity.status(HttpStatus.OK).body(JsonResult.success(result ? no : null));
 	}
-	
-	@PatchMapping("/{no}")
+	*/
+	@PatchMapping("/appointment/{no}")
 	public ResponseEntity<JsonResult> appointmentRemove(@PathVariable("no") Long no) {
+		System.out.println(no);
 		Boolean result = nurseService.removeAppointment(no);
 		return ResponseEntity.status(HttpStatus.OK).body(JsonResult.success(result ? no : null));
 	}
