@@ -51,12 +51,10 @@
 		</selectKey>
 	</insert>
 	
-	<update id="updateAttendanceSchedule" parameterType="long">
+	<update id="updateAttendanceSchedule" parameterType="map">
 		<![CDATA[
 			update attendance_schedule 
-			set start_date = #{startDate}, end_date = #{endDate}, status = #{status}, remark = #{remark},
-			is_confirmed = #{isConfirmed}, hospital_no = #{hospitalNo}, employee_no = #{employeeNo},
-			employeeNo1 = #{employeeNo1}, hopistal_no1 = #{hospitalNo1} 
+			set is_confirmed = 1
 			where no = #{no}
 		]]>
 	</update>	

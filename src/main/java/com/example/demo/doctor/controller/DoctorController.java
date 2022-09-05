@@ -41,7 +41,6 @@ public class DoctorController {
 	
 	@PostMapping("")
 	public ResponseEntity<JsonResult> success(@RequestBody HashMap<String, Object> param){
-		System.out.println(param);
 		Boolean result = doctorService.doctorSuccess(param);		
 		return ResponseEntity.status(HttpStatus.OK).body(JsonResult.success(result));		
 	}

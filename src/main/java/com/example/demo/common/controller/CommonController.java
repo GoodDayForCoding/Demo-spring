@@ -1,5 +1,6 @@
 package com.example.demo.common.controller;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,9 +55,9 @@ public class CommonController {
 		return ResponseEntity.status(HttpStatus.OK).body(JsonResult.success(commonService.addAttendanceSchedule(attendanceScheduleVo)));
 	}
 	
-	@PutMapping("attendanceSchedule/{no}")
-	public ResponseEntity<JsonResult> attendanceScheduleUpdate(@PathVariable("no") Long no) {
-		return ResponseEntity.status(HttpStatus.OK).body(JsonResult.success(commonService.updateAttendanceSchedule(no)));
+	@PutMapping("attendanceSchedule")
+	public ResponseEntity<JsonResult> attendanceScheduleUpdate(@RequestBody HashMap<String, Object> param) {
+		return ResponseEntity.status(HttpStatus.OK).body(JsonResult.success(commonService.updateAttendanceSchedule(param)));
 	}
 	
 	@DeleteMapping("attendanceSchedule/{no}")

@@ -40,9 +40,12 @@ public class CommonRepository {
 			return sqlSession.insert("common.insertAttendanceSchedule", attendanceScheduleVo) == 1;
 		}
 
-		public Boolean updateAttendanceSchedule(Long no) {
-
-			return sqlSession.update("common.updateAttendanceSchedule", no) == 1;
+		public Boolean updateAttendanceSchedule(List<Object> noList) {
+			boolean result = false;
+			for(int i = 0; i < noList.size(); i++) {
+				result = sqlSession.insert("common.updateAttendanceSchedule", Long.valueOf(noList.get(i).toString())) == 1;
+			}			
+			return result;
 		}
 		
 		public Boolean deleteAttendanceSchedule(Long no) {

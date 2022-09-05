@@ -27,13 +27,12 @@ public class CommonService {
 	}
 
 	public Boolean addAttendanceSchedule(AttendanceScheduleVo attendanceScheduleVo) {
-		// TODO Auto-generated method stub
 		return commonRepository.insertAttendanceSchedule(attendanceScheduleVo);
 	}
 
-	public Boolean updateAttendanceSchedule(Long no) {
-		// TODO Auto-generated method stub
-		return commonRepository.updateAttendanceSchedule(no);
+	public Boolean updateAttendanceSchedule(HashMap<String, Object> param) {
+		List<Object> noList = (List<Object>)param.get("no");
+		return commonRepository.updateAttendanceSchedule(noList);
 	}
 	
 	public Boolean deleteAttendanceSchedule(Long no) {
