@@ -31,7 +31,7 @@
 			left join employee b on a.employee_no = b.no
 			where a.hospital_no = #{no}
 			and date_format(a.start_date, '%Y-%m-%d') >= #{sdate}
-			or date_format(a.start_date, '%Y-%m-%d') >= #{sdate}
+			or date_format(a._date, '%Y-%m-%d') >= #{sdate}
 			order by a.is_confirmed asc, a.start_date;
 		]]>
 	</select>
